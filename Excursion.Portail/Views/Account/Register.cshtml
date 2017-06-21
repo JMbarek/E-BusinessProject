@@ -1,0 +1,234 @@
+﻿@model Excursion.Portail.Models.Register2Model
+@{
+    Layout = "_LayoutOrig.cshtml";
+    ViewBag.Title = "Ajout Utilisateur";
+
+
+    var obj = new List<string>();
+    obj.Add("Zone1"); obj.Add("Zone2"); obj.Add("Zone3");
+    obj.Add("Zone4"); obj.Add("Zone5");
+    SelectList ZonesList = new SelectList(obj);
+
+    var obj2 = new List<string>();
+    obj2.Add("réservation"); obj2.Add("suivi"); obj2.Add("paiements");
+    SelectList RolesList = new SelectList(obj2);
+
+
+    var obj3 = new List<string>();
+    obj3.Add("autorisé"); obj3.Add("non autorisé");
+    SelectList PayEnLigneList = new SelectList(obj3);
+
+    var obj4 = new List<string>();
+    obj4.Add("CIN"); obj4.Add("Passport");
+    SelectList TypeDocList = new SelectList(obj4);
+
+}
+
+<script type="text/javascript" src="~/Scripts/jquery-2.0.3.min.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $("#SubCIndirect").hide();
+        $("#SubClient").hide();
+        $("#SubResponsable").hide();
+        $("#TypeUser").change(function () {
+            if ($(this).val() === "Client Indirect") {
+                $("#SubCIndirect").show();
+            } else {
+                $("#SubCIndirect").hide();
+            }
+
+            if ($(this).val() === "Client") {
+                $("#SubClient").show();
+            } else {
+                $("#SubClient").hide();
+            }
+
+            if ($(this).val() === "Responsable") {
+                $("#SubResponsable").show();
+            } else {
+                $("#SubResponsable").hide();
+            }
+
+        });
+
+
+        $("#Cin").hide();
+        $("#Passport").hide();
+        $("#TypeDoc").change(function () {
+            if ($(this).val() === "CIN") {
+                $("#Cin").show();
+            } else {
+                $("#Cin").hide();
+            }
+
+            if ($(this).val() === "Passport") {
+                $("#Passport").show();
+            } else {
+                $("#Passport").hide();
+            }
+
+        });
+
+
+    });
+
+</script>
+
+
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+    <h2>Créer un nouveau utilisateur/vendeur.</h2>
+</hgroup>
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+
+    <fieldset>
+        <legend>Registration Form</legend>
+
+        <ol>
+            <table>
+                <tr>
+                    <td>
+                        <section class="featured">
+                            <div class="content-wrapper">
+                                @Html.LabelFor(m => m.TypeUser)
+                                @Html.DropDownList("TypeUser",
+                   (SelectList)(ViewData["Typeus"]), "-- Select --")
+
+                                @Html.LabelFor(m => m.Prenom)
+                                @Html.TextBoxFor(m => m.Prenom)
+
+                                @Html.LabelFor(m => m.Nom)
+                                @Html.TextBoxFor(m => m.Nom)
+
+                                @Html.LabelFor(m => m.Login)
+                                @Html.TextBoxFor(m => m.Login)
+
+                                @Html.LabelFor(m => m.Password)
+                                @Html.PasswordFor(m => m.Password)
+
+                                <div id="SubResponsable">
+
+                                    @Html.LabelFor(m => m.RoleResp)
+                                    @Html.TextBoxFor(m => m.RoleResp)
+
+                                </div>
+                            </div>
+                        </section>
+                    </td>
+                    <td id="SubCIndirect">
+                        <section class="featured">
+                            <div class="content-wrapper">
+
+                                @Html.Label("Type Vendeur")
+                                @Html.DropDownList("TypeCIndirect",
+                   (SelectList)(ViewData["TypeIndirc"]), "-- Select --")
+
+
+                                @Html.Label("Centre")
+                                @Html.DropDownList("CentreID",
+                (SelectList)(ViewData["Reg"]), "-- Select --")
+
+                                <label style="font-size: 15px">
+                                    Zone(s) :
+                                </label>
+                                @Html.ListBox("Zones", (MultiSelectList)ZonesList as MultiSelectList, new { style = "width: 150px;height:150px", id = "Zones", name = "Zones" })
+
+                                <label style="font-size: 15px">
+                                    Role(s) :
+                                </label>
+                                @Html.ListBox("Roles", (MultiSelectList)RolesList as MultiSelectList, new { style = "width: 150px;height:60px", id = "Roles", name = "Roles" })
+
+
+                                <label style="font-size: 15px">
+                                    Paiement en ligne :
+                                </label>
+                                @Html.DropDownList("PayEnLigne", (MultiSelectList)PayEnLigneList as MultiSelectList, new { style = "width: 150px", id = "PayEnLigne", name = "PayEnLigne" })
+
+                                @*<li>
+                                    @Html.HiddenFor(m => m.Region)
+                                    </li>*@
+
+
+                                @Html.Label("Code")
+                                @Html.TextBoxFor(m => m.CodeCIndirect)
+
+                            </div>
+                        </section>
+                    </td>
+                    @*<td id="SubClient">*@
+                    <td>
+                        <section class="featured">
+                            <div class="content-wrapper">
+                                <label style="font-size: 15px">
+                                    Type document (CIN / Passport) :
+                                </label>
+                                @Html.DropDownList("TypeDoc", (MultiSelectList)TypeDocList as MultiSelectList, "-Select-", new { style = "width: 150px", id = "TypeDoc", name = "TypeDoc" })
+
+                                <div id="Cin">
+                                    @Html.Label("Numero CIN")
+                                    @Html.TextBoxFor(m => m.NumCin)
+                                </div>
+
+                                <div id="Passport">
+                                    @Html.Label("Numero Passport")
+                                    @Html.TextBoxFor(m => m.NumPassport)
+                                </div>
+
+                                @Html.LabelFor(m => m.Nationalite)
+                                @Html.TextBoxFor(m => m.Nationalite)
+
+                                @Html.LabelFor(m => m.Adresse)
+                                @Html.TextBoxFor(m => m.Adresse)
+
+                                @Html.LabelFor(m => m.CodePostal)
+                                @Html.TextBoxFor(m => m.CodePostal)
+
+                                @Html.LabelFor(m => m.Ville)
+                                @Html.TextBoxFor(m => m.Ville)
+
+                                @Html.LabelFor(m => m.Pays)
+                                @Html.TextBoxFor(m => m.Pays)
+
+                                @Html.LabelFor(m => m.TelephoneFix)
+                                @Html.TextBoxFor(m => m.TelephoneFix)
+
+                                @Html.LabelFor(m => m.TelephoneMobile)
+                                @Html.TextBoxFor(m => m.TelephoneMobile)
+
+                                @Html.LabelFor(m => m.Email)
+                                @Html.TextBoxFor(m => m.Email)
+
+                                @Html.LabelFor(m => m.DateNaissance)
+                                @Html.TextBoxFor(m => m.DateNaissance)
+
+                                @Html.LabelFor(m => m.Fonction)
+                                @Html.TextBoxFor(m => m.Fonction)
+
+
+                            </div>
+                        </section>
+                    </td>
+
+                </tr>
+
+            </table>
+        </ol>
+
+        <input type="submit" value="Register" />
+    </fieldset>
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

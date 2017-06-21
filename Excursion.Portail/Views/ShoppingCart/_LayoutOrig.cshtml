@@ -1,0 +1,64 @@
+﻿@using MvcGlobalisationSupport;
+@using Excursion.Portail.Resources
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - - @Html.Raw(Global.Title)</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <header>
+        <div class="content-wrapper">
+            <div class="float-left">
+                @*<p class="site-title">@Html.ActionLink(Global.Logo, "Index", "Home")</p>*@
+                <img alt="" src="~/Images/logo/smiles.png" />
+            </div>
+            <div class="float-right">
+                <nav>
+                    <ul id="languages">
+                        <li>@Html.GlobalisedRouteLink(Global.LangEnglish, "en", ViewContext.RouteData)</li>
+                        <li>@Html.GlobalisedRouteLink(Global.LangGerman, "de", ViewContext.RouteData)</li>
+                        <li>@Html.GlobalisedRouteLink(Global.LangFrench, "fr", ViewContext.RouteData)</li>
+                        <li>@Html.GlobalisedRouteLink(Global.LangItalian, "it", ViewContext.RouteData)</li>
+                        @* <li>@Html.GlobalisedRouteLink(Global.LangArab, "ar", ViewContext.RouteData)</li>*@
+                    </ul>
+                </nav>
+                <section id="login">
+                    @Html.Partial("_LoginPartial")
+                </section>
+                <nav>
+                    <ul id="menu">
+                        <li>
+                           @{Html.RenderAction("CartSummary", "ShoppingCart");}
+                        </li>
+                        <li>@Html.ActionLink(Global.Home, "Index", "Home")</li>
+                        <li>@Html.ActionLink(Global.About, "About", "Home")</li>
+                        <li>@Html.ActionLink(Global.Contact, "Contact", "Home")</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <div id="body">
+        @RenderSection("featured", required: false)
+        <section class="content-wrapper main-content clear-fix">
+            @RenderBody()
+        </section>
+    </div>
+    <footer>
+        <div class="content-wrapper">
+            <div class="float-left">
+                <p>
+                    &copy; @DateTime.Now.Year - @Html.Raw(Global.Title)</p>
+            </div>
+        </div>
+    </footer>
+    @*@Scripts.Render("~/bundles/jquery")
+        @RenderSection("scripts", required: false)*@
+</body>
+</html>

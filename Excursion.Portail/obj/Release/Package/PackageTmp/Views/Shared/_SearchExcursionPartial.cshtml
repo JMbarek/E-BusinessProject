@@ -1,0 +1,454 @@
+﻿@using MvcGlobalisationSupport;
+@using Excursion.Portail.Resources;
+@model Excursion.Portail.Models.SearchExcursionModel
+@{
+    var Region = new List<string>();
+    Region.Add("Toutes Les Régions"); Region.Add("Cap Bon"); Region.Add("Centre");
+    Region.Add("Djerba & Zarzis"); Region.Add("Djerid"); Region.Add("Sahel");
+    Region.Add("Tabarka"); Region.Add("Tunis et côtes de Carthage");
+    SelectList RegionList = new SelectList(Region);
+
+    var VD = new List<string>();
+    VD.Add("Toutes Les Villes"); VD.Add("Tunis"); VD.Add("Hammamet / Nabeul");
+    VD.Add("Sousse / Monastir"); VD.Add("Djerba");
+    SelectList VilleDepartList = new SelectList(VD);
+
+    var obj = ViewData["key"];
+
+    var dateAndTime = DateTime.Now;
+    var date = dateAndTime.Date;
+    var date2 = date.AddDays(1).Date;
+    string datestring = date.ToString();
+    string date2string = date2.ToString();    
+}
+@*<style type="text/css">
+                .pg-normal
+                {
+                    color: black;
+                    font-weight: normal;
+                    text-decoration: none;
+                    cursor: pointer;
+                }
+                .pg-selected
+                {
+                    color: black;
+                    font-weight: bold;
+                    text-decoration: underline;
+                    cursor: pointer;
+                }
+</style>
+
+<script type="text/javascript" src="../../Scripts/paging.js"></script>*@
+<script src="@Url.Content("~/Scripts/jquery-1.7.1.js")" type="text/javascript"></script>
+<link href="@Url.Content("~/Content/themes/base/minified/jquery-ui.min.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/jquery-ui-1.8.20.min.js")" type="text/javascript"></script>
+<script type="text/javascript">
+
+    $(function () {
+        $(".dtp").datepicker(
+            {
+                closeText: 'Fermer', closeStatus: 'Fermer sans modifier',
+                prevText: '&lt;Préc', prevStatus: 'Voir le mois précédent',
+                nextText: 'Suiv&gt;', nextStatus: 'Voir le mois suivant',
+                currentText: 'Courant', currentStatus: 'Voir le mois courant',
+                monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
+                'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+                monthNamesShort: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun',
+                'Jul', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc'],
+                monthStatus: 'Voir un autre mois', yearStatus: 'Voir un autre année',
+                weekHeader: 'Sm', weekStatus: '',
+                dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+                dayNamesShort: ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'],
+                dayNamesMin: ['Di', 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa'],
+                dayStatus: 'Utiliser DD comme premier jour de la semaine', dateStatus: 'Choisir le DD, MM d',
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'mm/dd/yy'
+            });
+
+    });
+
+
+</script>
+<table style="border-style: double; border-color: Blue">
+    <tbody>
+        @*@using (Html.BeginForm("Search", "Sortie", FormMethod.Post))*@
+        @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "form" }))
+        {  
+            <fieldset>
+                <legend>recherche excursion:</legend>
+                <ol>
+                    <li>
+                        <label style="font-size: 15px">
+                            Sélectionner vos dates :</label></li>
+                    <li>
+                        <label style="font-size: 10px">
+                            A partir de :</label>
+                        @Html.TextBoxFor(m => m.ApartirDe, new { @class = "dtp", style = "width: 80px", id = "first", Value = date })
+                    </li>
+                    <li>
+                        <label style="font-size: 10px">
+                            Jusqu'à :</label>
+                        @Html.TextBoxFor(m => m.Jsqa, new { @class = "dtp", style = "width: 80px", id = "second", Value = date2 })
+                    </li>
+                    <li>
+                        <label style="font-size: 10px">
+                            jour (s):</label>
+                        <a id="nbj" style="width: 10px">
+                            <input id="Nbrjours" type="text" style="width: 20px" value="1" oninput="changedate()"
+                                onchange="changedate()" onfocus="changedate()" onblur="changedate()" /></a>
+                        @*
+                        onclick="changedate()  oninput="changedate()" onfocus="changedate()"
+                                onblur="changedate()"
+                        @Html.TextBoxFor(m => m.Nbrjours, new { style = "width: 45px" })  *@ </li>
+                    <script type="text/javascript">
+                        function parseDate(str) {
+                            //var mdy = str.split('/')
+                            var mdy = str.substring(0, 10).split('/')
+                            return new Date(mdy[2], mdy[0] - 1, mdy[1]);
+                        }
+
+                        function daydiff(first, second) {
+                            return (second - first) / (1000 * 60 * 60 * 24)
+                        }
+
+                        function changedate() {
+
+                            //alert(Nbrjours.value);
+                            var str = $('#first').val()
+                            var mdy = str.substring(0, 10).split('/')
+                            var s = mdy[2] + "-" + mdy[0] + "-" + mdy[1];
+                            //alert(s.toString());
+                            var arrivalDate = new Date(s.toString());
+                            //alert(arrivalDate);
+                            var s3 = mdy[0] + "/" + mdy[1] + "/" + mdy[2];
+                            //alert(s3.toString());
+                            first.value = s3.toString();
+                            //var departureDate = new Date();
+                            var departureDate = new Date(arrivalDate.setDate(arrivalDate.getDate() + parseInt(Nbrjours.value)));
+                            //alert(departureDate);
+                            var o = departureDate.toLocaleDateString().toString();
+                            var mdy2 = o.substring(0, 10).split('/')
+                            var s2 = mdy2[1] + "/" + mdy2[0] + "/" + mdy2[2];
+                            //alert(s2.toString());
+                            second.value = s2.toString();
+
+
+                        }
+
+
+
+                        $("#first").change(function () {
+                            var str = $('#first').val()
+                            var mdy = str.substring(0, 10).split('/')
+                            var s = mdy[2] + "-" + mdy[0] + "-" + mdy[1];
+                            var arrivalDate = new Date(s.toString());
+                            var str2 = $('#first').val()
+                            var mdy2 = str2.substring(0, 10).split('/')
+                            var s2 = mdy2[2] + "-" + mdy2[0] + "-" + mdy2[1];
+                            var departureDate = new Date(s2.toString());
+
+                            if (arrivalDate.getDate() < departureDate.getDate()) {
+                                Nbrjours.value = daydiff(parseDate($('#first').val()), parseDate($('#second').val()));
+                            }
+                        });
+
+
+                        $("#second").change(function () {
+                            var strr = $('#first').val()
+                            var mdyy = strr.substring(0, 10).split('/')
+                            var ss = mdyy[2] + "-" + mdyy[0] + "-" + mdyy[1];
+                            var arrivalDate2 = new Date(ss.toString());
+                            var str22 = $('#first').val()
+                            var mdy22 = str22.substring(0, 10).split('/')
+                            var s22 = mdy22[2] + "-" + mdy22[0] + "-" + mdy22[1];
+                            var departureDate2 = new Date(s22.toString());
+
+                            //if (arrivalDate2.getDate() < departureDate2.getDate()) {
+                            Nbrjours.value = daydiff(parseDate($('#first').val()), parseDate($('#second').val()));
+                            //}
+                        });
+                        
+                    </script>
+                    @* <li>
+                    <label>
+                    Regions :</label>
+                    @Html.DropDownList("Region", (SelectList)(RegionList), "--Select--", new { style = "width: 300px;height:25px" })
+                    </li>*@
+                    <li>
+                        <label style="font-size: 15px">
+                            Sélectionner votre destination :</label>
+                        <label style="font-size: 10px">
+                            Region :</label>
+                        @Html.DropDownList("Region", (SelectList)(RegionList), new { style = "width: 150px", id = "listvilleRegion" })
+                    </li>
+                    <li>
+                        <label style="font-size: 10px">
+                            Ville :</label>
+                        <select id="VilleArrive" name="VilleArrive" style="width: 150px">
+                            <option value="Toutes Les Villes">Toutes Les Villes</option>
+                            <option value="Béni Khiar">Béni Khiar</option>
+                            <option value="Dougga">Dougga</option>
+                            <option value="El Haouaria">El Haouaria</option>
+                            <option value="Hammam Sousse">Hammam Sousse</option>
+                            <option value="Hammamet">Hammamet</option>
+                            <option value="Hammamet Mrazga">Hammamet Mrazga</option>
+                            <option value="Hammamet Nord">Hammamet Nord</option>
+                            <option value="Hammamet Yasmine">Hammamet Yasmine</option>
+                            <option value="Hergla">Hergla</option>
+                            <option value="Kelibia">Kelibia</option>
+                            <option value="Korbous">Korbous</option>
+                            <option value="Nabeul">Nabeul</option>
+                            <option value="Kerkennah">Kerkennah</option>
+                            <option value="Korba">Korba</option>
+                            <option value="Zembra et Zembretta">Zembra et Zembretta</option>
+                            <option value="El Djem">El Djem</option>
+                            <option value="Borj Cedria">Borj Cedria</option>
+                            <option value="Côtes de Carthage">Côtes de Carthage</option>
+                            <option value="Ezzahra">Ezzahra</option>
+                            <option value="Tunis Ville">Tunis Ville</option>
+                            <option value="Aîn Draham">Aîn Draham</option>
+                            <option value="Béja">Béja</option>
+                            <option value="Bizerte">Bizerte</option>
+                            <option value="El Kef">El Kef</option>
+                            <option value="Ghar El Melh">Ghar El Melh</option>
+                            <option value="Jendouba">Jendouba</option>
+                            <option value="Tabarka">Tabarka</option>
+                            <option value="Tajerouine">Tajerouine</option>
+                            <option value="Testour">Testour</option>
+                            <option value="Utique">Utique</option>
+                            <option value="Kairouan">Kairouan</option>
+                            <option value="Mahdia">Mahdia</option>
+                            <option value="Sousse">Sousse</option>
+                            <option value="Monastir">Monastir</option>
+                            <option value="Ben Gardane">Ben Gardane</option>
+                            <option value="Douz">Douz</option>
+                            <option value="Gafsa">Gafsa</option>
+                            <option value="Kebili">Kebili</option>
+                            <option value="Ksar Ghilane">Ksar Ghilane</option>
+                            <option value="Médenine">Médenine</option>
+                            <option value="Nefta">Nefta</option>
+                            <option value="Remada">Remada</option>
+                            <option value="Sbeïtla">Sbeïtla</option>
+                            <option value="Tamerza">Tamerza</option>
+                            <option value="Tataouine">Tataouine</option>
+                            <option value="Tozeur">Tozeur</option>
+                            <option value="Djerba">Djerba</option>
+                            <option value="Gabès">Gabès</option>
+                            <option value="Matmata">Matmata</option>
+                            <option value="Zarzis">Zarzis</option>
+                            <option value="Sfax">Sfax</option>
+                            <option value="Zaghouane">Zaghouane</option>
+                        </select>
+                        <script type="text/javascript">
+                            $("#listvilleRegion").change(function () {
+                                var selectedValue = $(this).val();
+                                $.ajax({
+                                    url: '@Url.Action("GetVillesByRegion", "Home")',
+                                    type: 'POST',
+                                    data: { "selectedValue": selectedValue },
+                                    dataType: 'json',
+                                    success: function (response) {
+                                        var items = "";
+                                        $.each(response.VilleList, function (i, item) {
+                                            items += "<option value=\"" + item + "\">" + item + "</option>";
+                                        });
+                                        $("#VilleArrive").html(items);
+                                    },
+                                    error: function (error) {
+                                    }
+
+                                });
+                            });
+                        </script>
+                    </li>
+                    <li>
+                        <label style="font-size: 10px">
+                            Ville de départ :
+                        </label>
+                        @Html.DropDownList("VilleDepart", (SelectList)(VilleDepartList), "--Select--", new { style = "width: 150px", id = "VilleDepart" })
+                    </li>
+                    @*<li>
+                <label>
+                    Ville d'arrivée :
+                </label>
+                @Html.DropDownList("VilleArrive", (SelectList)(VilleArriveList), "--Select--", new { style = "width: 300px;height:25px" })
+            </li>*@
+                    <li>
+                        <label style="font-size: 15px">
+                            Thème(s) disponible(s) :</label>
+                        @Html.ListBox("Themes", (MultiSelectList)obj as MultiSelectList, new { style = "width: 150px;height:150px", id = "Themes", name = "Themes" })
+                    </li>
+                </ol>
+                @*<button id="button">
+                    Rechercher2</button>*@
+                <input type="submit" value="Rechercher" />
+            </fieldset>
+        }
+    </tbody>
+</table>
+<script type="text/javascript">
+
+    //var k = document.getElementsByName("Themes")[0].valueOf();
+
+    //        var param = {
+    //            first: $("#first").val(),
+    //            second: $("#second").val(),
+    //            Nbrjours: $("#Nbrjours").val(),
+    //            listvilleRegion: x,
+    //            VilleArrive: y,
+    //            VilleDepart: document.getElementById("VilleDepart").getAttribute()
+    //            //            Themes : 
+    //            //            {
+    //            //            for ( var i=0; i<= indx - 1 ; i++ )
+    //            //            {
+    //            //               Theme[i] : list[indx - i].valueOf(),
+    //            //            }
+    //            //            }
+
+    //        }
+
+    //$('#target').html('sending..');
+    $(document).ready(function () {
+
+        function pagination() {
+            $('table[data-provide=pagination]').each(function () {
+                var $table = $(this);
+                var $pager = $('<ul></ul>');
+                var currentPage = 0;
+                var numPerPage = $("#instancesPerPage").val();
+                var numRows = $table.find('tbody tr').length;
+                var numPages = Math.ceil(numRows / numPerPage);
+
+                $table.unbind('repaginate');
+
+                $table.bind('repaginate', function () {
+                    $table.find('tbody tr').hide().slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
+                });
+
+                for (var page = 0; page < numPages; page++) {
+                    var link = '<a href=#null >' + (parseInt(page) + 1).toString() + '</a>';
+
+                    $('<td width="5px"></td>').html(link).on('click', { newPage: page }, function (event) {
+                        currentPage = event.data['newPage'];
+                        $table.trigger('repaginate');
+                        $(this).addClass('active').siblings().removeClass('active');
+                    }).appendTo($pager);
+                }
+
+                $pager.find("li:first-child").addClass('active');
+                $($table.data('pager')).html($pager);
+                $table.trigger('repaginate');
+            });
+        };
+
+        function deleteAllrows() {
+
+            var table = document.getElementById("tableSorties");
+            //or use :  var table = document.all.tableid;
+            for (var i = table.rows.length - 1; i > 0; i--) {
+                table.deleteRow(i);
+            }
+
+        }
+
+        function SelectElement() {
+            $("#instancesPerPage").val("All");
+            pagination();
+        }
+
+        function getLanguage() {
+            debugger;
+            var lang = '@MvcGlobalisationSupport.CultureManager.GetLanguage()'.toString();
+            return lang;
+        }
+
+        $("#form").submit(function () {
+
+
+            var x = document.getElementById("listvilleRegion").value;
+            var y = document.getElementById("VilleArrive").value;
+            var z = document.getElementById("VilleDepart").value;
+            var list = document.getElementById("Themes");
+            var indx = list.selectedIndex;
+            var i = list[indx].value;
+
+            var obj = new Object();
+            obj.first = $("#first").val();
+            obj.second = $("#second").val();
+            obj.Nbrjours = $("#Nbrjours").val();
+            obj.listvilleRegion = x;
+            obj.VilleArrive = y;
+            obj.VilleDepart = z;
+
+            var st = "[" + list[indx].value;
+            //alert(list.length);
+            for (var i = 0; i < list.length; i++) {
+                if (list[i].selected == true) {
+                    st = st + "," + list[i].value;
+                }
+
+            }
+            st = st + "]";
+
+            obj.Themes = st;
+            var jsonString = JSON.stringify(obj);
+            //alert(jsonString.valueOf());
+
+            $.ajax({
+                url: '@Url.Action("Search2", "Home")',
+                type: 'POST',
+                dataType: 'json',
+                data: { "jsonString": jsonString },
+                success: function (response) {
+                    //alert("succes");
+                    //debugger;
+                    deleteAllrows();
+                    SelectElement();
+                    document.getElementById("result").style.visibility = "visible";
+                    //var items = "<table id='tableSorties'><th>SortieID</th><th>Nom Excursion</th><th>Date</th><th>Heure Départ</th><th>Type Excursion</th><th>ExcursionID</th><th></th>";
+                    var items = ""
+                    $.each(response.SortiesList, function (i, item) {
+                        //debugger;
+
+                        items += "<tr><td><img src=\"/Images/Img/Excursion/" + item.Excursion.Photo + "\" width='122' height='102'/></td>";
+                        debugger;
+                        if (getLanguage() == "fr") {
+                            items += "<td width='500'>" + item.Excursion.Nom_fr + "&nbsp; " + item.TypeExc.Type + "&nbsp; Au départ de &nbsp;" + item.Excursion.Centre.Nom + "&nbsp; à &nbsp;" + item.HeureDepart + "&nbsp; Description &nbsp;" + item.Excursion.Description_fr + "</td>";
+                        }
+                        else if (getLanguage() == "de") {
+                            items += "<td width='500'>" + item.Excursion.Nom_de + "&nbsp; " + item.TypeExc.Type + "&nbsp; Aus &nbsp;" + item.Excursion.Centre.Nom + "&nbsp; bis &nbsp;" + item.HeureDepart + "&nbsp; Beschreibung &nbsp;" + item.Excursion.Description_de + "</td>";
+                        } else if (getLanguage() == "en") {
+                            items += "<td width='500'>" + item.Excursion.Nom_en + "&nbsp; " + item.TypeExc.Type + "&nbsp; From &nbsp;" + item.Excursion.Centre.Nom +  "&nbsp; at &nbsp;" + item.HeureDepart + "&nbsp; Description &nbsp;" + item.Excursion.Description_en + "</td>";
+                        } else if (getLanguage() == "it") {
+                            items += "<td width='500'>" + item.Excursion.Nom_it + "&nbsp; " + item.TypeExc.Type + "&nbsp; Da &nbsp;" + item.Excursion.Centre.Nom + "&nbsp; a &nbsp;" + item.HeureDepart + "&nbsp; Descrizione &nbsp;" + item.Excursion.Description_it + "</td>";
+                        }
+
+                        //items += "<td>" + item.Excursion.Nom + "</td>";
+                        items += "<td>" + item.TypeExc.Type + "</td>";
+                        var date = new Date(Date.parse(item.Jour.Date));
+                        items += "<td>" + date + "</td>";
+                        items += "<td>" + item.HeureDepart + "</td>";
+                        //items += "<td>" + item.Excursion.Description + "</td>";
+                        //items += "<td>" + item.TypeExc.Type + "</td>";
+                        //items += "<td>" + item.ExcursionID + "</td>";
+                        //items += "<td><button>Reserver</button></td></tr>";
+                        items += "<td><a style='color:red' href=\"ShoppingCart/AddToCart?id=" + item.SortieID + "&nbrAdultes=2&nbrEnfants=1&nbrBebes=1\">Add to cart</a></td></tr>";
+                        items += "<td><a href=\"Home/Reserver?id=" + item.SortieID + "\">Reserver</a></td></tr>";
+                             
+                    });
+                    $("#tableSorties").append(items);
+                    //                    items += "</table>";
+                    //                    $("#insert").html(items);
+
+                },
+                error: function (error) {
+                    alert("fail");
+                }
+
+            });
+            return false;
+        });
+    });
+    
+</script>

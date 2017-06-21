@@ -1,0 +1,52 @@
+﻿@model Excursion.Portail.Models.DayReservationModel
+
+<script src="@Url.Content("~/Scripts/jquery-1.7.1.js")" type="text/javascript"></script>
+<link href="@Url.Content("~/Content/themes/base/minified/jquery-ui.min.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/jquery-ui-1.8.20.min.js")" type="text/javascript"></script>
+<script type="text/javascript">
+
+    $(function () {
+        $(".dtp").datepicker(
+            {
+                closeText: 'Fermer', closeStatus: 'Fermer sans modifier',
+                prevText: '&lt;Préc', prevStatus: 'Voir le mois précédent',
+                nextText: 'Suiv&gt;', nextStatus: 'Voir le mois suivant',
+                currentText: 'Courant', currentStatus: 'Voir le mois courant',
+                monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
+                'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+                monthNamesShort: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun',
+                'Jul', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc'],
+                monthStatus: 'Voir un autre mois', yearStatus: 'Voir un autre année',
+                weekHeader: 'Sm', weekStatus: '',
+                dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+                dayNamesShort: ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'],
+                dayNamesMin: ['Di', 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa'],
+                dayStatus: 'Utiliser DD comme premier jour de la semaine', dateStatus: 'Choisir le DD, MM d',
+                changeMonth: true,
+                changeYear: true
+                //dateFormat: 'dd-mm-yy'   
+            });
+
+    });
+
+</script>
+
+        @using (Html.BeginForm("Ajouter", "Sortie", FormMethod.Post))
+        {    
+            <fieldset>
+              
+                <ol>
+                    <li>
+                        <label style="font-size: 10px">
+                            Date (jour):</label>
+                        @Html.TextBoxFor(m => m.Date, new { style = "width: 200px", @class = "dtp" })
+                    </li>@*
+                    <li>
+                        @Html.LabelFor(m => m.HeureDepart)
+                        @Html.TextBoxFor(m => m.HeureDepart)
+                    </li>*@
+                </ol>
+                <input type="submit" value="Submit" />
+            </fieldset>
+        }
+

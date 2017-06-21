@@ -1,0 +1,450 @@
+﻿@using MvcGlobalisationSupport;
+@using Excursion.Portail.Resources;
+@*@model IEnumerable<Excursion.Portail.Models.ReservationModel>*@
+@{
+    //ViewBag.Title = "Index";
+    Layout = "_LayoutOrig.cshtml";
+    //Layout = null;    
+}
+<style>
+    /*To highlight the sorting inside the igGrid*/
+    .ui-iggrid td.ui-state-moving
+    {
+        background: 0;
+        background-color: #c2e8f8;
+        color: #333;
+        font-weight: normal;
+        text-shadow: 0 1px 0 rgba(255,255,255,0.8);
+        border-color: #b3e2f6;
+        border-width: 1px;
+    }
+</style>
+@*<script src="@Url.Content("~/Scripts/jquery-1.8.2.js")" type="text/javascript"></script>
+<link href="@Url.Content("~/Content/themes/base/minified/jquery-ui.min.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/jquery-ui-1.8.24.min.js")" type="text/javascript"></script>*@
+@*<script src="@Url.Content("~/Scripts/jquery-1.7.1.js")" type="text/javascript"></script>*@
+@*<link href="@Url.Content("~/Content/themes/base/minified/jquery-ui.min.css")" rel="stylesheet" type="text/css" />*@
+@*//<script src="@Url.Content("~/Scripts/jquery-ui-1.8.20.min.js")" type="text/javascript"></script>*@
+<!--IgniteUI resources loader-->
+@*//<script src="@Url.Content("~/Scripts/js/infragistics.loader.js")" type="text/javascript"></script>*@
+<!--Dialog controls scripts-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"
+    type="text/javascript"></script>
+<script src="http://cdn-na.infragistics.com/jquery/20122/latest/js/infragistics.loader.js"
+    type="text/javascript"></script>
+<script// src="@Url.Content("~/Scripts/dialog.js")" type="text/javascript"></script>
+@*<script type="text/javascript">
+    //    var data = [
+    //          { "ReservationID": 1, "Hotel": "Adjustable Race", "Sortie": "SortieAR-5381", "NumTicket": 12, "NumChamb": 1, "DateReserv": "\/Date(896648400000)\/", "Langue": "fr", "Observation": "noObs" },
+    //          { "ReservationID": 2, "Hotel": "Bearing Ball", "Sortie": "SortieBA-8327", "NumTicket": 13, "NumChamb": 2, "DateReserv": "\/Date(896648400000)\/", "Langue": "fr", "Observation": "noObs" },
+    //          { "ReservationID": 3, "Hotel": "BB Ball Bearing", "Sortie": "SortieBE-2349", "NumTicket": 14, "NumChamb": 3, "DateReserv": "\/Date(896648400000)\/", "Langue": "fr", "Observation": "noObs"}];
+
+    $.ig.loader({
+        scriptPath: "http://cdn-na.infragistics.com/jquery/20122/latest/js/",
+        cssPath: "http://cdn-na.infragistics.com/jquery/20122/latest/css/",
+        resources: "igGrid.Selection"
+    });
+    $.ig.loader(function () {
+
+        $.getJSON("Reservation/GetAll", null, function (data) {
+            //            var headerTextValues = ["ReservationID", "DateReser", "Hotel", "Chambre", "NumeroTicket", "Excursion", "Langue", "Observation"];
+
+            //            "ReservationID":1,"Sortie":"Excursion_fr","DateReserv":"\/Date(1390258800000)\/","NumChamb":"1","Hotel":"hotel1","TypeClient":"Client Indirect"
+            //            ,"UserID":1,"PointDepart":"rrr","NumLigneAs400":null,"Langue":"Eng","Observation":"rr","Etat":"N","DateAnnulation":null,"DateModification":null
+            //            ,"NumTicket":1,"Reduction":null,"NbreAdultes":1,"NbreEnfants":1,"NbreBebes":1,"Paye":true,"DatePayement":"\/Date(1390258800000)\/","AddRow":null
+            //            ,"DeleteRow":null,"UpdateRow":null,"PayeRow":null,"Guide":null,"Fournisseur":null,"ClientD":null
+
+
+            $("#grid1").igGrid({
+                autoGenerateColumns: false,
+                primaryKey: "ReservationID",
+                columns: [
+
+                        { headerText: "aa", key: "ReservationID", dataType: "number" },
+                        { headerText: "ff", key: "Hotel", dataType: "string" },
+                        { headerText: "aa", key: "DateReserv", dataType: "date", format: "date" },
+                        { headerText: "a", key: "NumChamb", dataType: "number" },
+                        { headerText: "a", key: "NumTicket", dataType: "number" },
+                        { headerText: "a", key: "Sortie", dataType: "string" },
+                        { headerText: "a", key: "Langue", dataType: "string" },
+                        { headerText: "a", key: "Observation", dataType: "string" }
+                   ],
+                height: "400px",
+                dataSource: data,
+                dataSourceType: "json",
+                features: [
+                {
+                    name: "Selection",
+                    multipleSelection: true
+                }
+            ]
+            });
+        });
+    });
+    function selectedRowsCellsValue() {
+        var rowId;
+        var rows = $("#grid1").igGridSelection("selectedRows");
+        debugger;
+        $.each(rows, function (ix, el) {
+            rowId = el.element.attr("data-id");
+            debugger;
+            var cellValue = $("#grid1").igGrid("getCellValue", rowId, "Hotel");
+            console.log(cellValue);
+        });
+    }
+</script>
+<input type="button" onclick="selectedRowsCellsValue()" value="Get cells value (look in the browser console for output)" />
+<table id="grid1">
+</table>*@
+@if (Excursion.Portail.Utilities.SessionData.CurrentUser.TypeUser == "Client Indirect")
+{
+    <script type="text/javascript">
+
+
+	$.ig.loader({
+		scriptPath: "http://cdn-na.infragistics.com/jquery/20122/latest/js/",
+		cssPath: "http://cdn-na.infragistics.com/jquery/20122/latest/css/",
+	//	resources: "igGrid.Selection"
+        resources: "igGrid.*"
+    //     scriptPath: '/Scripts/js/',
+    //        cssPath: '/Scripts/css/',
+    //        resources: 'igGrid.*',
+	});
+	
+    $.ig.loader(function () {
+            $.getJSON("Reservation/GetAll", null, function (data) {
+                var headerTextValues = ["Id", "Payed",'@Global.DateReservation', '@Global.Hotel', '@Global.Chambre', '@Global.NumeroTicket', '@Global.Excursion', '@Global.Langue', '@Global.Observation', "Pax", '@Global.NombreAdultes', '@Global.NombreEnfants', '@Global.NombreBebes', '@Global.PointDepart', '@Global.Modifier', '@Global.Annuler'];
+                
+		$("#employeeGrid").igGrid({
+			        expandCollapseAnimations: true,
+                    animationDuration: 1000,
+                    expandTooltip: "Expand to View Details",
+                    collapseTooltip: "Hide details",
+                    dataSource: data,
+                    responseDataKey: "Records",
+                    dataSourceType: "json",
+                    autoGenerateLayouts: false,
+                    autoGenerateColumns: false,
+                    rowEditDialogContainment: "owner",
+                    showReadonlyEditors: false,
+
+                    columns: [
+                        //{ headerText: headerTextValues[0], key: "ReservationID", width: 4, hidden: true },
+                        { headerText: headerTextValues[0], key: "ReservationID", width: 4, dataType: "number" },
+                        { headerText: headerTextValues[1], key: "Paye", dataType: "boolean" },
+                        { headerText: headerTextValues[2], key: "DateReserv", width: 175, dataType: "date", format: "date"},
+                        { headerText: headerTextValues[3], key: "Hotel", width: 80, dataType: "string" },
+                        { headerText: headerTextValues[4], key: "NumChamb", width: 40, dataType: "number" },
+                        { headerText: headerTextValues[5], key: "NumTicket", width: 80, dataType: "number" },
+                        { headerText: headerTextValues[6], key: "Sortie", width: 80, dataType: "string" },
+                        { headerText: headerTextValues[7], key: "Langue", width: 40, dataType: "string" },
+                        { headerText: headerTextValues[8], key: "Observation", width: 175, dataType: "string" },
+                        { headerText: headerTextValues[9], key: "SortieID", dataType: "number", hidden: true },
+                        {
+                            headerText: headerTextValues[9],
+                            group: [
+                            { headerText: headerTextValues[10], key: "NbreAdultes", dataType: "number", width: "50px" },
+                            { headerText: headerTextValues[11], key: "NbreEnfants", dataType: "number", width: "50px" },
+                            { headerText: headerTextValues[12], key: "NbreBebes", dataType: "number", width: "50px" }
+                            ]
+                        },
+                        { headerText: headerTextValues[13], key: "PointDepart", width: 175, dataType: "string" },
+                        {headerText: headerTextValues[14], key: "UpdateRow", width: 60, template: "<a href='Reservation/UpdateReservation?ReservationID=${ReservationID}' class='editDialog'><img alt='@Global.Modifier'  src='@Url.Content("/ziceadmin/images/icon/icon_edit.png")'/></a>" },                        
+                        { headerText: headerTextValues[15], key: "DeleteRow", width: 60, template: "<a href='Reservation/Annuler?ReservationID=${ReservationID}' class='confirmDialog'><img alt='@Global.Annuler'  src='@Url.Content("/ziceadmin/images/icon/Delete-icon.png")'/></a>" }
+                      //{ headerText: headerTextValues[16], key: "PayeRow", width: 60, template: "<a href='Reservation/Paye?ReservationID=${ReservationID}'><img alt='@Global.Paye'  src='@Url.Content("/ziceadmin/images/icon/Money-icon.png")'/></a>" }
+                  
+                   ],
+
+                    //initialDataBindDepth: -1,
+                    primaryKey: 'ReservationID',
+                    updateURL: "Reservation/Update",
+
+
+                    features: [
+                            {
+                               name: "RowSelectors",
+                               enableCheckBoxes: true,
+                               enableRowNumbering: false
+                            },                            
+                            {
+                                name: 'MultiColumnHeaders'
+                            },
+                        
+                            {
+                                name: "Selection",
+                                multipleSelection: true                               
+                            },
+                            {
+                                name: 'Hiding'                               
+                            },
+                            {
+                                name: 'Paging',
+                                type: 'local',
+                                pageSize: 5,
+                                inherit: true
+                            },
+                            {
+                                name: 'Filtering',
+                                //mode: 'advanced',
+                                 //allowFiltering: true,
+                                //caseSensitive: false,
+                                columnSettings: [
+                                  {columnKey: 'ReservationID', allowFiltering: false},
+                                  {columnKey: 'UpdateRow', allowFiltering: false},
+                                  {columnKey: 'DeleteRow', allowFiltering: false},
+                                  {columnKey: 'PayeRow', allowFiltering: false} 
+                                ]
+                            },
+                            {
+                                name: "ColumnMoving",
+                                mode: "immediate",
+                                addMovingDropdown: true,
+                                mode: "deferred",
+                                type: "render"
+                            }
+
+                    ]
+                
+		});
+        });
+	});
+   
+
+    function loop(myData) {
+    debugger;
+             $.ajax({
+                     url: '@Url.Action("AddSelectionToCartMethode", "ShoppingCart")', 
+                     type: 'GET',                    
+                     data: { "jsonString": myData },
+                     dataType: 'json',
+                     success: function(data) {
+                        //alert('successful');
+                        document.getElementById('hiddenButton').click();
+                        //debugger;                        
+                        //$('#message').append("Added To Chopping Cart"); 
+                     },
+                     error: function (error) {
+                         //debugger;
+                         //alert("error");
+                     }
+             });       
+    }
+         
+    function goWork(){  
+       //alert('go');  
+       var rowId;
+       var rows = $("#employeeGrid").igGridSelection("selectedRows");
+       debugger;
+
+      var myData = []; 
+       $.each(rows, function (ix, el) {
+          debugger;
+          rowId = el.element.attr("data-id");
+          debugger;
+          var cellSortieID = $("#employeeGrid").igGrid("getCellValue", rowId, "SortieID"); 
+          var cellNbreAdultes = $("#employeeGrid").igGrid("getCellValue", rowId, "NbreAdultes");
+          var cellNbreEnfants = $("#employeeGrid").igGrid("getCellValue", rowId, "NbreEnfants");
+          var cellNbreBebes = $("#employeeGrid").igGrid("getCellValue", rowId, "NbreBebes");        
+          debugger;
+
+          var obj = { 
+               SortieID: cellSortieID,
+               NbreAdultes: cellNbreAdultes,
+               NbreEnfants: cellNbreEnfants,
+               NbreBebes: cellNbreBebes
+                    };
+          myData.push(obj);
+       });
+
+       var jsonString = JSON.stringify(myData);
+       loop(jsonString)
+            //var jsonString = JSON.stringify(obj);
+     }
+
+    </script>
+    
+    
+    <script type="text/javascript">
+        (function () { with (this[2]) { with (this[1]) { with (this[0]) { return function (event) { selectedRowsCellsValue() }; } } } })
+    </script>
+}
+else if (Excursion.Portail.Utilities.SessionData.CurrentUser.TypeUser == "Responsable Service Excursions")
+{
+    <script type="text/javascript">
+
+
+
+
+    $.ig.loader({
+        scriptPath: '/Scripts/js/',
+        cssPath: '/Scripts/css/',
+
+        resources: 'igGrid.*',
+        ready: function () {
+            $.getJSON("Reservation/GetAllRespExc", null, function (data) {
+                var headerTextValues = ["Id", '@Global.DateReservation', '@Global.Hotel', '@Global.Chambre', '@Global.NumeroTicket', '@Global.Excursion', '@Global.Langue', '@Global.Observation', "Pax", '@Global.NombreAdultes', '@Global.NombreEnfants', '@Global.NombreBebes', '@Global.PointDepart',"Client" ,"Guide" ,"Fournisseur" ,"Client D" ,'@Global.Modifier', '@Global.Annuler', '@Global.Paye'];
+                
+                $('#employeeGrid').igGrid({
+                    expandCollapseAnimations: true,
+                    animationDuration: 1000,
+                    expandTooltip: "Expand to View Details",
+                    collapseTooltip: "Hide details",
+                    //height: "400px",
+                    //width: "800px",
+                    dataSource: data,
+                    responseDataKey: "Records",
+                    dataSourceType: "json",
+                    autoGenerateLayouts: false,
+                    autoGenerateColumns: false,
+
+                    rowEditDialogContainment: "owner",
+                    showReadonlyEditors: false,
+
+                    columns: [
+                        //{ headerText: headerTextValues[0], key: "ReservationID", width: 4, hidden: true },
+                        { headerText: headerTextValues[0], key: "ReservationID", width: 4 },
+                        { headerText: headerTextValues[1], key: "DateReserv", width: 175, dataType: "date", format: "date"},
+                        { headerText: headerTextValues[2], key: "Hotel", width: 80, dataType: "string" },
+                        { headerText: headerTextValues[3], key: "NumChamb", width: 40, dataType: "number" },
+                        { headerText: headerTextValues[4], key: "NumTicket", width: 80, dataType: "number" },
+                        { headerText: headerTextValues[5], key: "Sortie", width: 80, dataType: "string" },
+                        { headerText: headerTextValues[6], key: "Langue", width: 40, dataType: "string" },
+                        { headerText: headerTextValues[7], key: "Observation", width: 175, dataType: "string" },
+                        {
+                            headerText: headerTextValues[8],
+                            group: [
+                            { headerText: headerTextValues[9], key: "NbreAdultes", dataType: "number", width: "50px" },
+                            { headerText: headerTextValues[10], key: "NbreEnfants", dataType: "number", width: "50px" },
+                            { headerText: headerTextValues[11], key: "NbreBebes", dataType: "number", width: "50px" }
+                            ]
+                        },
+                        { headerText: headerTextValues[12], key: "PointDepart", width: 175, dataType: "string" },
+                        {
+                            headerText: headerTextValues[13],
+                            group: [
+                            { headerText: headerTextValues[14], key: "Guide", dataType: "string", width: "50px" },
+                            { headerText: headerTextValues[15], key: "Fournisseur", dataType: "string", width: "50px" },
+                            { headerText: headerTextValues[16], key: "ClientD", dataType: "string", width: "50px" }
+                            ]
+                        },
+                    //  { headerText: headerTextValues[8], key: "UpdateRow", width: 175, template: "<a href='Reservation/ManageReservation?ReservationID=${ReservationID}&command=edit' class='editDialog'>Modifier</a>" },
+                        //  { headerText: headerTextValues[9], key: "DeleteRow", width: 175, template: "<a href='Reservation/Delete?ReservationID=${ReservationID}' class='confirmDialog'>Annuler</a>" }
+
+                      //{ headerText: headerTextValues[13], key: "UpdateRow", width: 80, template: "<a href='Reservation/UpdateReservation?ReservationID=${ReservationID}' class='editDialog'>@Global.Modifier</a>" },
+                        { headerText: headerTextValues[17], key: "UpdateRow", width: 60, template: "<a href='Reservation/UpdateReservation?ReservationID=${ReservationID}' class='editDialog'><img alt='@Global.Modifier'  src='@Url.Content("/ziceadmin/images/icon/icon_edit.png")'/></a>" },                        
+                        { headerText: headerTextValues[18], key: "DeleteRow", width: 60, template: "<a href='Reservation/Annuler?ReservationID=${ReservationID}' class='confirmDialog'><img alt='@Global.Annuler'  src='@Url.Content("/ziceadmin/images/icon/Delete-icon.png")'/></a>" },
+                        { headerText: headerTextValues[19], key: "PayeRow", width: 60, template: "<a href='Reservation/Paye?ReservationID=${ReservationID}'><img alt='@Global.Paye'  src='@Url.Content("/ziceadmin/images/icon/Money-icon.png")'/></a>" }
+                  
+                   ],
+
+                    initialDataBindDepth: -1,
+                    primaryKey: 'ReservationID',
+                    //width: '800',
+                    updateURL: "Reservation/Update",
+
+//                                        columnLayouts: [
+//                                                {
+//                                                    key: "Addresses",
+//                                                    responseDataKey: "Records",
+//                                                    autoGenerateColumns: false,
+//                                                    autoGenerateLayouts: false,
+//                                                    generateCompactJSONResponse: false,
+//                                                    primaryKey: "AddressId",
+//                                                    foreignKey: "ReservationID",
+//                                                    columns: [
+//                                                        { key: "AddressId", headerText: "Address Id", width: "150px" },
+//                                                        { key: "Address1", headerText: "Address", width: "150px" },
+//                                                        { key: "Street", headerText: "Street", width: "150px" },
+//                                                        { key: "City", headerText: "City", width: "150px" },
+//                                                        { key: "Zip", headerText: "Zip", width: "150px" }
+//                                                    ]
+//                                                }
+//                                        ],
+
+                    features: [
+                            {
+                                name: 'MultiColumnHeaders'
+                            },
+                            {
+                                name: "Selection",
+                                mode: "row",
+                                multipleSelection: false
+                            },
+                            {
+                                name: 'Hiding'                               
+                            },
+                            {
+                                name: 'Paging',
+                                type: 'local',
+                                pageSize: 5,
+                                inherit: true
+                            },
+                            {
+                                name: 'Filtering',
+                                //mode: 'advanced',
+                                 //allowFiltering: true,
+                                //caseSensitive: false,
+                                columnSettings: [
+                                  {columnKey: 'ReservationID', allowFiltering: false},
+                                  {columnKey: 'UpdateRow', allowFiltering: false},
+                                  {columnKey: 'DeleteRow', allowFiltering: false},
+                                  {columnKey: 'PayeRow', allowFiltering: false} 
+                                ]
+                            },
+                            {
+                                name: "ColumnMoving",
+                                mode: "immediate",
+                                addMovingDropdown: true,
+                                mode: "deferred",
+                                type: "render"
+                            }
+
+
+                    ]
+                });
+            });
+        }
+    });
+
+        
+    </script>
+}
+@section featured {
+    <section class="featured">
+        <div>
+            <!-- the igHierarchicalGrid target element-->
+            <table id="employeeGrid" style="width: auto;">
+            </table>
+            <p>
+                <br />
+                &nbsp; <a id='openDialog' href="Reservation/AddReservation" class='openDialog ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only'
+                    style="color: white;">@Global.AjouterReservation</a>
+                    
+                    
+                     @*               @Html.ActionLink("Ajouter excursion", "Ajouter", "Excursion", null, new { @class = "ui-button ui-state-default ui-corner-all ui-button-text-only", style = "color: white;" })
+                @Html.ActionLink("Ajouter sortie", "Ajouter", "Sortie", null, new { @class = "ui-button ui-state-default ui-corner-all ui-button-text-only", style = "color: white;" })
+                @Html.ActionLink("Ajouter Hotel", "Ajouter", "Hotel", null, new { @class = "ui-button ui-state-default ui-corner-all ui-button-text-only", style = "color: white;" })
+                @Html.ActionLink("Ajouter theme", "Ajouter", "Theme", null, new { @class = "ui-button ui-state-default ui-corner-all ui-button-text-only", style = "color: white;" })
+                @Html.ActionLink("Ajouter Zone", "Ajouter", "Zone", null, new { @class = "ui-button ui-state-default ui-corner-all ui-button-text-only", style = "color: white;" })
+                @Html.ActionLink("Ajouter Région", "Ajouter", "Region", null, new { @class = "ui-button ui-state-default ui-corner-all ui-button-text-only", style = "color: white;" })*@
+                
+                
+                <input id="selectedRows" type="submit" value="Add to cart" onclick="goWork()" />
+                <a id="hiddenButton" href='@Url.Action("GuideIndex", "ShoppingCart")' style="visibility:hidden">
+                    hidden</a>
+            </p>
+        </div>
+    </section>
+    <br />
+    <div id="dialog-confirm" style="display: none">
+        <p>
+            <span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>
+            Are you sure to cancel ?
+        </p>
+    </div>
+    <div id="dialog-edit" style="display: none">
+    </div>
+    <div id="dialog-view" style="display: none">
+    </div>
+}

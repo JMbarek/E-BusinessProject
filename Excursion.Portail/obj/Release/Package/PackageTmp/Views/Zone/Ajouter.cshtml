@@ -1,0 +1,33 @@
+﻿@model Excursion.Data.Zone
+@{
+    ViewBag.Title = "Ajouter Theme";
+    Layout = "_LayoutOrig.cshtml";  
+}
+<section class="featured">
+    <div class="content-wrapper">
+        @using (Html.BeginForm("Ajouter", "Zone", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {   
+            @Html.ValidationSummary(true)
+            @Html.AntiForgeryToken()
+    
+            <fieldset>
+                <legend>Ajout Zone</legend>
+                <ol>
+                    <li>
+                        @Html.LabelFor(m => m.Nom)
+                        @Html.TextBoxFor(m => m.Nom)
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.CodeZone)
+                        @Html.TextBoxFor(m => m.CodeZone)
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.Centre)
+                        @Html.DropDownList("Centre", (SelectList)(ViewData["CentreList"]), "--Select--")
+                    </li>
+                </ol>
+                <input type="submit" value="Ajouter Zone" />
+            </fieldset>
+        }
+    </div>
+</section>

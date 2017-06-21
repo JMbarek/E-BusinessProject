@@ -1,0 +1,44 @@
+﻿@model Excursion.Data.Hotel
+@{
+    ViewBag.Title = "Ajouter";
+    Layout = "_LayoutOrig.cshtml";  
+}
+
+
+       @* @Html.Partial("~/Views/Shared/_NavigationMenu.cshtml")*@
+ 
+
+
+<section class="featured">
+    <div class="content-wrapper">
+        @using (Html.BeginForm("Ajouter", "Hotel", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <fieldset style="border: border-width=1">
+                <legend>Ajout Periode:</legend>
+                <ol>
+                    <li>
+                        @Html.LabelFor(m => m.Nom)
+                        @Html.TextBoxFor(m => m.Nom)
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.CodeHotel)
+                        @Html.TextBoxFor(m => m.CodeHotel)
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.NbrEtoiles)
+                        @Html.DropDownList("NbreEtoiles", (SelectList)(ViewData["NbreEtoileList"]), "--Select--")
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.Region)
+                        @Html.DropDownList("NomRegion", (SelectList)(ViewData["regionList"]), "--Select--")
+                    </li>
+                    <li>
+                        @Html.LabelFor(model => model.Photo)
+                        @Html.TextBoxFor(model => model.Photo, new { type = "file" })<br />
+                    </li>
+                </ol>
+                <input type="submit" value="Add Hotel" />
+            </fieldset>
+        }
+    </div>
+</section>

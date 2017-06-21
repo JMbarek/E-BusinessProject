@@ -1,0 +1,103 @@
+﻿@model Excursion.Portail.ViewModels.CreateTripViewModel
+ 
+@{
+    ViewBag.Title = "Create";
+    Layout = "_LayoutOrig.cshtml";  
+}
+
+<section class="featured">
+    <div class="content-wrapper">
+        @using (Html.BeginForm("Create", "Excursionn", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <fieldset style="border: border-width=1">
+                <legend>Add Trip:</legend>
+                <ol>
+                    <li>
+                        @Html.LabelFor(m => m.Excursionn.title)
+                        @Html.TextBoxFor(m => m.Excursionn.title)
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.Excursionn.description)
+                        @Html.TextBoxFor(m => m.Excursionn.description)
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.Excursionn.theme)
+                        @Html.TextBoxFor(m => m.Excursionn.theme)
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.Excursionn.state)
+                        @Html.TextBoxFor(m => m.Excursionn.state)
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.Excursionn.adults)
+                        @Html.TextBoxFor(m => m.Excursionn.adults)
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.Excursionn.priceAdult)
+                        @Html.TextBoxFor(m => m.Excursionn.priceAdult)
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.Excursionn.kinder)
+                        @Html.TextBoxFor(m => m.Excursionn.kinder)
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.Excursionn.priceKind)
+                        @Html.TextBoxFor(m => m.Excursionn.priceKind)
+                    </li>
+                    
+                    <li>
+                        @Html.LabelFor(m => m.Excursionn.babies)
+                        @Html.TextBoxFor(m => m.Excursionn.babies)
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.Excursionn.priceBaby)
+                        @Html.TextBoxFor(m => m.Excursionn.priceBaby)
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.Excursionn.departureDay)
+                        @Html.TextBoxFor(m => m.Excursionn.departureDay)
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.Excursionn.departureTime)
+                        @Html.TextBoxFor(m => m.Excursionn.departureTime)
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.Excursionn.departurePoint)
+                        @Html.TextBoxFor(m => m.Excursionn.departurePoint)
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.Excursionn.departureCountry)
+                        @Html.TextBoxFor(m => m.Excursionn.departureCountry)
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.Excursionn.destination)
+                        @Html.TextBoxFor(m => m.Excursionn.destination)
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.Excursionn.length)
+                        @Html.TextBoxFor(m => m.Excursionn.length)
+                    </li>
+                </ol>
+                <input type="submit" value="Add Excursion" />
+            </fieldset>
+        }
+    </div>
+</section>
+
+<section class="featured">
+    <div class="content-wrapper">
+        @using (Html.BeginForm("UploadImage", "Excursionn", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <fieldset style="border: border-width=1">
+                <legend>Add Image:</legend>
+                <ol>
+                    <li>
+                        @Html.LabelFor(m => m.FileUploadViewModel.FileUploadLocation)
+                        @Html.TextBoxFor(m => m.FileUploadViewModel.FileUploadLocation, new { type = "file", accept = "FileUploadLocation/*" })
+                    </li>
+                </ol>
+                <input type="submit" value="Add Image" />
+            </fieldset>
+        }
+    </div>
+</section>

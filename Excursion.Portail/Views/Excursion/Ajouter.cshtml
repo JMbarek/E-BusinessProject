@@ -1,0 +1,238 @@
+﻿@model Excursion.Data.Excursion
+@{
+    ViewBag.Title = "Ajouter";
+    Layout = "_LayoutOrig.cshtml";  
+}
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        //we hide both forms
+        document.getElementById("periode").style.display = "none";
+        document.getElementById("prix").style.display = "none";
+        //names of functions as well as attributes should describe them
+
+    });
+    function show(elementId) {
+        //now we kick out both conditional we do not need them anymore
+
+        //and then we simply show wanted one isn't that nicer and cleaner?
+        if (elementId == "periode") {
+            document.getElementById("periode").style.display = "block";
+            document.getElementById("prix").style.display = "none";
+            document.getElementById("excursion").style.display = "none";
+        }
+        if (elementId == "prix") {
+            document.getElementById("prix").style.display = "block";
+            document.getElementById("periode").style.display = "none";
+            document.getElementById("excursion").style.display = "none";
+        }
+        if (elementId == "excursion") {
+            document.getElementById("excursion").style.display = "block";
+            document.getElementById("prix").style.display = "none";
+            document.getElementById("periode").style.display = "none";
+        }
+    }
+    function hide(elementId) {
+        document.getElementById(elementId).style.display = "none";
+        document.getElementById("excursion").style.display = "none";
+    }
+</script>
+<section class="featured">
+    <div class="content-wrapper">
+        <a onclick="show('periode');">+ Add Periode</a><a onclick="show('prix');"> + Add Prix</a><a
+            onclick="show('excursion');"> + Add Excursion</a> @*@Html.RouteLink("+ Add Periode", new { onclick = "show('periode');" })  
+@Html.ActionLink("+ Add Periode", null, null, new { onclick = "show('periode');" })
+@Html.Label("+ Add Periode", new { onclick = "show('periode');" })
+@Html.Action("+ Add Periode", new { onclick = "show('periode');" })*@ @* ("+ Add Periode", new { onclick = "show('periode');" })*@
+        <div id="periode">
+            @Html.Partial("~/Views/Shared/_PeriodePartial.cshtml")
+        </div>
+        <div id="prix">
+            @Html.Partial("~/Views/Shared/_PrixPartial.cshtml", null, new ViewDataDictionary { { "Key", ViewData["ZoneList"] } })
+        </div>
+        <div id="excursion">
+            @using (Html.BeginForm("Ajouter", "Excursion", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.ValidationSummary(true)
+                @Html.AntiForgeryToken()
+
+                <fieldset>
+                    <legend>Ajout Excursion:</legend>
+                    <ol>
+                        <li>
+                            @Html.LabelFor(m => m.Nom_de)
+                            @Html.TextBoxFor(m => m.Nom_de)
+                        </li>
+                        <li>
+                            @Html.LabelFor(m => m.Nom_fr)
+                            @Html.TextBoxFor(m => m.Nom_fr)
+                        </li>
+                        <li>
+                            @Html.LabelFor(m => m.Nom_en)
+                            @Html.TextBoxFor(m => m.Nom_en)
+                        </li>
+                        <li>
+                            @Html.LabelFor(m => m.Nom_it)
+                            @Html.TextBoxFor(m => m.Nom_it)
+                        </li>
+                        <li>
+                            @Html.LabelFor(m => m.CodeExcursion)
+                            @Html.TextBoxFor(m => m.CodeExcursion)
+                        </li>
+                        <li>
+                            @Html.LabelFor(m => m.Description_de)
+                            @Html.TextAreaFor(m => m.Description_de, new { style = "width: 300px" })
+                        </li>
+                        <li>
+                            @Html.LabelFor(m => m.Description_en)
+                            @Html.TextAreaFor(m => m.Description_en, new { style = "width: 300px" })
+                        </li>
+                        <li>
+                            @Html.LabelFor(m => m.Description_fr)
+                            @Html.TextAreaFor(m => m.Description_fr, new { style = "width: 300px" })
+                        </li>
+                        <li>
+                            @Html.LabelFor(m => m.Description_it)
+                            @Html.TextAreaFor(m => m.Description_it, new { style = "width: 300px" })
+                        </li>
+                        <li>
+                            @Html.LabelFor(m => m.Duree)
+                            @Html.DropDownList("Duree", (SelectList)(ViewData["DureeList"]), "--Select--")
+                        </li>
+                        <li>
+                            <label>
+                                Durée en heures:</label>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <label style="font-size: 13px">
+                                            Heures</label>@Html.DropDownList("Heures", (SelectList)(ViewData["HeureList"]), "0")
+                                    </td>
+                                    <td>
+                                        <label style="font-size: 13px">
+                                            et</label>
+                                    </td>
+                                    <td>
+                                        <label style="font-size: 13px">
+                                            Minutes</label>@Html.DropDownList("Minutes", (SelectList)(ViewData["MinuteList"]), "0" )
+                                    </td>
+                                </tr>
+                            </table>
+                        </li>
+                        <li>
+                            @Html.LabelFor(model => model.Photo)
+                            @Html.TextBoxFor(model => model.Photo, new { type = "file" })<br />
+                        </li>
+                        <li>
+                            @Html.LabelFor(m => m.Periode)
+                            @Html.DropDownList("Periode", (SelectList)(ViewData["PeriodeList"]), "--Select--"  )
+                        </li>
+                        <li>
+                            @Html.LabelFor(m => m.Prix)
+                            @Html.DropDownList("Prix", (SelectList)(ViewData["PrixList"]), "--Select--")
+                        </li>
+                        <li>
+                            @Html.LabelFor(m => m.Etat)
+                            @Html.DropDownList("Etat", (SelectList)(ViewData["EtatList"]), "--Select--")
+                        </li>
+                        <li>
+                            @Html.LabelFor(m => m.EstLimite)
+                            @Html.CheckBoxFor(m => m.EstLimite)
+                        </li>
+                        <li>
+                            <label>
+                                Themes :</label>
+                            <br />
+                            @Html.ListBox("Themes", ViewData["ThemeList"] as MultiSelectList)
+                            @*<table style="border-style: solid">
+                        <tr>
+                            <td>
+                                <label style="font-size: 13px">
+                                    Affaires</label>@Html.CheckBox("Affaires")
+                                <label style="font-size: 13px">
+                                    All Inclusive</label>@Html.CheckBox("AllInclusive")
+                                <label style="font-size: 13px">
+                                    Archéologie</label>@Html.CheckBox("Archeologie")
+                                <label style="font-size: 13px">
+                                    Balnéaire</label>@Html.CheckBox("Balneaire")
+                                <label style="font-size: 13px">
+                                    Combinées</label>@Html.CheckBox("Combinees")
+                                <label style="font-size: 13px">
+                                    Découverte</label>@Html.CheckBox("Decouverte")
+                                <label style="font-size: 13px">
+                                    Désert</label>@Html.CheckBox("Desert")
+                                <label style="font-size: 13px">
+                                    Early</label>
+                                @Html.CheckBox("Early")
+                                <label style="font-size: 13px">
+                                    Booking</label>
+                                @Html.CheckBox("Booking")
+                                <label style="font-size: 13px">
+                                    Ecologique</label>
+                                @Html.CheckBox("Ecologique")
+                            </td>
+                            <td>
+                                <label style="font-size: 13px">
+                                    fête des mères</label>@Html.CheckBox("fetedesmeres")
+                                <label style="font-size: 13px">
+                                    Golf</label>
+                                @Html.CheckBox("Golf")
+                                <label style="font-size: 13px">
+                                    Gratuité</label>
+                                @Html.CheckBox("Gratuite")
+                                <label style="font-size: 13px">
+                                    Enfant</label>@Html.CheckBox("Enfant")
+                                <label style="font-size: 13px">
+                                    Meilleure</label>
+                                @Html.CheckBox("Meilleure")
+                                <label style="font-size: 13px">
+                                    Note</label>@Html.CheckBox("Note")
+                                <label style="font-size: 13px">
+                                    Montagne</label>@Html.CheckBox("Montagne")
+                                <label style="font-size: 13px">
+                                    Petit</label>
+                                @Html.CheckBox("Petit")
+                                <label style="font-size: 13px">
+                                    Budget</label>
+                                @Html.CheckBox("Budget")
+                                <label style="font-size: 13px">
+                                    Promo</label>
+                                @Html.CheckBox("Promo")
+                            </td>
+                            <td>
+                                <label style="font-size: 13px">
+                                    Randonnée</label>
+                                @Html.CheckBox("Randonnee")
+                                <label style="font-size: 13px">
+                                    Famille</label>
+                                @Html.CheckBox("Famille")
+                                <label style="font-size: 13px">
+                                    Réveillon</label>
+                                @Html.CheckBox("Reveillon")
+                                <label style="font-size: 13px">
+                                    Saharien</label>
+                                @Html.CheckBox("Saharien")
+                                <label style="font-size: 13px">
+                                    Spécial</label>
+                                @Html.CheckBox("Special")
+                                <label style="font-size: 13px">
+                                    Aid El Kebir</label>
+                                @Html.CheckBox("AidElKebir")
+                                <label style="font-size: 13px">
+                                    Thalassothérapie</label>@Html.CheckBox("Thalassotherapie")
+                                <label style="font-size: 13px">
+                                    Thermalisme</label>@Html.CheckBox("Thermalisme")
+                                <label style="font-size: 13px">
+                                    Voyages de noces</label>@Html.CheckBox("Voyagesdenoces")
+                                <label style="font-size: 13px">
+                                    Week-end</label>@Html.CheckBox("Week-end")
+                            </td>
+                        </tr>
+                    </table>*@ </li>
+                    </ol>
+                    <input type="submit" value="Add Excursion" />
+                </fieldset>
+            }
+        </div>
+    </div>
+</section>

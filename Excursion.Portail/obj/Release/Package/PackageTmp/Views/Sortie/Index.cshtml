@@ -1,0 +1,107 @@
+﻿@model IEnumerable<Excursion.Data.SortieParSemaine>
+
+@{
+    //Layout = "_Layout2.cshtml";
+    ViewBag.Title = "IndexAll";
+}
+
+ 
+<div class="onecolumn" >
+<div class="header">
+<span >Trips </span>
+</div><!-- End header -->	
+<div class=" clear"></div>
+<div class="content"  >
+<form> 
+<div class="tableName">
+
+  <h4>User Type : @Excursion.Portail.Utilities.SessionData.CurrentUser.TypeUser</h4>
+    
+
+@using (Html.BeginForm("Index", "Client"))
+{
+  
+  <h4 style="color:Red">@ViewBag.Message</h4>
+
+    if (Model != null)
+    {
+<table class="display data_table2" >
+	<thead>
+		<tr>
+     
+        <th>Code </th>
+        <th>Name</th>
+        <th>Date</th> 
+        <th>Type </th>
+        <th>Departure time</th>
+      
+    </tr>
+	</thead>
+
+    
+	<tbody>
+     @foreach (var item in Model)
+     {
+	<tr class="odd gradeA">
+     <td class="center">
+        @Html.DisplayFor(modelItem => item.Excursion.CodeExcursion)
+    </td>
+    <td class="center">
+        @Html.DisplayFor(modelItem => item.Excursion.Nom)
+    </td>
+    <td class="center">
+        @Html.DisplayFor(modelItem => item.Jour.Date)
+    </td>
+    <td class="center">
+        @Html.DisplayFor(modelItem => item.TypeExc.Type)
+    </td>
+    <td class="center">
+        @Html.DisplayFor(modelItem => item.HeureDepart)
+    </td>
+            
+@if ( Excursion.Portail.Utilities.SessionData.CurrentUser.TypeUser == "Responsable")
+{
+   <td class="center">
+       
+         <span class="tip">
+         <a  title="update" href='@Url.Action("ModifierClient", "Client", new { N_CLient = item.ExcursionID })'>
+          <img alt=""  src='@Url.Content("/ziceadmin/images/icon/icon_edit.png")' />
+         </a>
+         </span> 
+        
+        <span class="tip">
+         <a  title="Delete" href='@Url.Action("DeleteClient", "Client", new { N_CLient = item.ExcursionID })'>
+          <img alt=""  src='@Url.Content("/ziceadmin/images/icon/icon_delete.png")' />
+         </a>   
+        </span>
+
+         <span class="tip">
+         <a  title="Details" href='@Url.Action("DetailsClient", "Client", new { N_CLient = item.ExcursionID })'>
+          <img alt=""  src='@Url.Content("/ziceadmin/images/icon/detail.png")' />
+         </a>   
+        </span>
+         
+   </td>
+}
+else if (Excursion.Portail.Utilities.SessionData.CurrentUser.TypeUser == "Client Indirect")
+{ 
+    <td class="center">
+    <a class="uibutton medium" href="@Url.Action("Create", "Reservation", new { SortieID = item.SortieID })" >Book</a>
+    </td>
+}
+</tr>
+     }
+</tbody>
+    
+</table>
+     
+    }
+}
+</div>
+</form>
+                    
+</div>
+</div>
+
+
+

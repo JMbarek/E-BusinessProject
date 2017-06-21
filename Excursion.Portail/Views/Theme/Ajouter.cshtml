@@ -1,0 +1,60 @@
+﻿@model Excursion.Data.Theme
+@{
+    ViewBag.Title = "Ajouter Theme";
+    Layout = "_LayoutOrig.cshtml";  
+}
+<section class="featured">
+    <div class="content-wrapper">
+        @using (Html.BeginForm("Ajouter", "Theme", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {   
+            @Html.ValidationSummary(true)
+            @Html.AntiForgeryToken()
+    
+            <fieldset>
+                <legend>Ajout theme</legend>
+                <ol>
+                    <li>
+                        @Html.LabelFor(m => m.Nom_de)
+                        @Html.TextBoxFor(m => m.Nom_de)
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.Nom_en)
+                        @Html.TextBoxFor(m => m.Nom_en)
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.Nom_fr)
+                        @Html.TextBoxFor(m => m.Nom_fr)
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.Nom_it)
+                        @Html.TextBoxFor(m => m.Nom_it)
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.CodeTheme)
+                        @Html.TextBoxFor(m => m.CodeTheme)
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.Description_de)
+                        @Html.TextAreaFor(m => m.Description_de)
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.Description_en)
+                        @Html.TextAreaFor(m => m.Description_en)
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.Description_fr)
+                        @Html.TextAreaFor(m => m.Description_fr)
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.Description_it)
+                        @Html.TextAreaFor(m => m.Description_it)
+                    </li>
+                    <li>
+                        @Html.LabelFor(model => model.Photo)
+                        @Html.TextBoxFor(model => model.Photo, new { type = "file" })<br />
+                    </li>
+                </ol>
+                <input type="submit" value="Ajouter Theme" />
+            </fieldset>
+        }</div>
+</section>

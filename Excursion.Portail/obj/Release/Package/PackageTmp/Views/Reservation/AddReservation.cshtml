@@ -1,0 +1,116 @@
+﻿@using MvcGlobalisationSupport;
+@using Excursion.Portail.Resources;
+@model Excursion.Portail.Models.ReservationModel
+@{  
+    Layout = null;
+}
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+@using (Html.BeginForm("AddReservation", "Reservation", FormMethod.Post))
+{
+   
+    <fieldset>
+        <legend>Reservation</legend>
+      @*  @if (ViewBag.IsUpdate == true)
+        {
+            @Html.HiddenFor(model => model.ReservationID)
+        }
+         *@
+        <div>
+@*            @Html.LabelFor(model => model.Hotel)
+*@            <label>@Global.Hotel</label>
+            @Html.DropDownList("HotelName", (SelectList)(ViewData["HotelsList"]), "--Select--")
+            
+            <br />
+            @Html.ValidationMessageFor(model => model.Hotel)
+        </div>
+        <div class="editor-field">
+            @*@Html.LabelFor(model => model.NumChamb)*@
+            
+            <label>@Global.Chambre</label>
+            @Html.EditorFor(model => model.NumChamb)
+            <br />
+            @Html.ValidationMessageFor(model => model.NumChamb)
+        </div>
+        <div class="editor-field">
+            @*@Html.LabelFor(model => model.NumTicket)*@
+            <label>@Global.NumeroTicket</label>
+            @Html.EditorFor(model => model.NumTicket)
+            <br />
+            @Html.ValidationMessageFor(model => model.NumTicket)
+        </div>
+        <div class="editor-field">
+            @*@Html.LabelFor(model => model.Sortie)*@
+            <label>@Global.Excursion</label>
+            @Html.DropDownList("ExcursionName", (SelectList)(ViewData["ExcursionsList"]), "--Select--")
+            
+            <br />
+            @Html.ValidationMessageFor(model => model.Sortie)
+        </div>
+        <div class="editor-field">
+            @*@Html.LabelFor(model => model.Langue)*@
+            <label>@Global.Langue</label>
+            @Html.DropDownList("LangueName",(SelectList)(ViewData["LanguesList"]),"--Select--")
+                   
+            <br />
+            @Html.ValidationMessageFor(model => model.Langue)
+        </div>
+
+
+        <div class="editor-field">
+            @*@Html.LabelFor(model => model.NbreAdultes)*@
+            <label>@Global.NombreAdultes</label>
+            @Html.EditorFor(model => model.NbreAdultes)
+            <br />
+            @Html.ValidationMessageFor(model => model.NbreAdultes)
+        </div>
+        <div class="editor-field">
+            @*@Html.LabelFor(model => model.NbreEnfants)*@
+            <label>@Global.NombreEnfants</label>
+            @Html.EditorFor(model => model.NbreEnfants)
+            <br />
+            @Html.ValidationMessageFor(model => model.NbreEnfants)
+        </div>
+        <div class="editor-field">
+            @*@Html.LabelFor(model => model.NbreBebes)*@
+            <label>@Global.NombreBebes</label>
+            @Html.EditorFor(model => model.NbreBebes)
+            <br />
+            @Html.ValidationMessageFor(model => model.NbreBebes)
+        </div>
+
+        <div class="editor-field">
+            @*@Html.LabelFor(model => model.Observation)*@
+            <label>@Global.Observation</label>
+            @Html.EditorFor(model => model.Observation)
+            <br />
+            @Html.ValidationMessageFor(model => model.Observation)
+        </div>
+        <div class="editor-field">
+            @*@Html.LabelFor(model => model.PointDepart)*@
+            <label>@Global.PointDepart</label>
+            @Html.EditorFor(model => model.PointDepart)
+            <br />
+            @Html.ValidationMessageFor(model => model.PointDepart)
+        </div>
+        <div class="editor-field">
+            @*@Html.LabelFor(model => model.Paye)*@
+            <label>@Global.Paye</label>
+            @Html.CheckBoxFor(model => model.Paye)
+            
+            <br />
+            
+        </div>
+
+        <p>
+            
+            <input type="submit" value="Save" id="btnSave" name="cmd" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" />
+            
+            <input type="button" value="Cancel" id="btncancel" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" />
+
+        </p>
+    </fieldset>
+}
+

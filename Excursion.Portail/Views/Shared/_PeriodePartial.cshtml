@@ -1,0 +1,49 @@
+﻿@model Excursion.Data.Periode
+<script src="@Url.Content("~/Scripts/jquery-1.7.1.js")" type="text/javascript"></script>
+<link href="@Url.Content("~/Content/themes/base/minified/jquery-ui.min.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/jquery-ui-1.8.20.min.js")" type="text/javascript"></script>
+<script type="text/javascript">
+
+    $(function () {
+        $(".dtp").datepicker(
+            {
+                closeText: 'Fermer', closeStatus: 'Fermer sans modifier',
+                prevText: '&lt;Préc', prevStatus: 'Voir le mois précédent',
+                nextText: 'Suiv&gt;', nextStatus: 'Voir le mois suivant',
+                currentText: 'Courant', currentStatus: 'Voir le mois courant',
+                monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
+                'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+                monthNamesShort: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun',
+                'Jul', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc'],
+                monthStatus: 'Voir un autre mois', yearStatus: 'Voir un autre année',
+                weekHeader: 'Sm', weekStatus: '',
+                dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+                dayNamesShort: ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'],
+                dayNamesMin: ['Di', 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa'],
+                dayStatus: 'Utiliser DD comme premier jour de la semaine', dateStatus: 'Choisir le DD, MM d',
+                changeMonth: true,
+                changeYear: true      
+            });
+   
+    });
+
+</script>
+@using (Html.BeginForm("Ajouter", "Periode", FormMethod.Post))
+{
+    <fieldset style="border:border-width=1">
+    <legend>Ajout Periode:</legend>
+       <ol>
+            <li>
+                @Html.LabelFor(m => m.DateDebut)
+                @Html.TextBoxFor(m => m.DateDebut, new { @class = "dtp" })                 
+            </li>
+            <li>
+                @Html.LabelFor(m => m.DateFin)
+                @Html.TextBoxFor(m => m.DateFin, new { @class = "dtp" })
+            </li>
+            
+       </ol> 
+
+    <input type="submit" value="Add Period" onclick="hide('periode');" />
+    </fieldset>
+}

@@ -1,0 +1,397 @@
+﻿@using MvcGlobalisationSupport;
+@using Excursion.Portail.Resources;
+@model IEnumerable<Excursion.Data.Reservation>
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+ 
+
+<script src="../../Scripts/jquery-1.7.1.min.js" type="text/javascript"></script>
+<script src="../../Scripts/jquery-ui-1.8.20.min.js" type="text/javascript"></script>
+ 
+    <link href="../../Content/Site.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../../ScriptsJqGrid/Scripts/jqgrid/themes/redmond/jquery-ui-1.7.1.custom.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../../ScriptsJqGrid/Scripts/jqgrid/themes/ui.jqgrid.css" />
+    <link href="../../ScriptsJqGrid/Content/ui.daterangepicker.css" rel="stylesheet" type="text/css" />
+    <script src="../../ScriptsJqGrid/Scripts/jqgrid/js/jquery.layout.js" type="text/javascript"></script>
+    <script src="../../ScriptsJqGrid/Scripts/jqgrid/js/i18n/grid.locale-en.js" type="text/javascript"></script>
+    <script src="../../ScriptsJqGrid/Scripts/jqgrid/js/jquery.jqGrid.min.js" type="text/javascript"></script>
+    <script src="../../ScriptsJqGrid/Scripts/jqgrid/js/jquery.tablednd.js" type="text/javascript"></script>
+    <script src="../../ScriptsJqGrid/Scripts/jqgrid/js/jquery.contextmenu.js" type="text/javascript"></script>
+    <script src="../../ScriptsJqGrid/Scripts/daterangepicker.jQuery.js" type="text/javascript"></script>
+    <script src="../../JqGrid/Scripts/jquery.maskedinput-1.2.2.min.js" type="text/javascript"></script>
+
+
+<div class="onecolumn" >
+<div class="header">
+<span > @Global.Reservations </span>
+</div><!-- End header -->	
+<div class=" clear"></div>
+<div class="content"  >
+ @*
+<form> 
+<div class="tableName">
+
+@using (Html.BeginForm("Index", "Client"))
+{
+  
+  <h4 style="color:Red">@ViewBag.Message</h4>
+
+    if (Model != null)
+    {
+<table class="display data_table2" >
+	<thead>
+		<tr>
+        <th>Reservation Date</th>
+        <th>Condition</th>
+        <th>Departure Point</th> 
+   
+    </tr>
+	</thead>
+
+    
+	<tbody>
+     @foreach (var item in Model)
+     {
+	<tr class="odd gradeA">
+     <td class="center">
+        @Html.DisplayFor(modelItem => item.DateReserv)
+    </td>
+    <td class="center">
+        @Html.DisplayFor(modelItem => item.Etat)
+    </td>
+    <td class="center">
+        @Html.DisplayFor(modelItem => item.PointDepart)
+    </td>
+ 
+            
+@if (Excursion.Portail.Utilities.SessionData.CurrentUser.TypeUser == "Responsable" && Excursion.Portail.Utilities.SessionData.CurrentUser.RoleResp == "RespValidSSE")
+{
+   <td class="center"> 
+         <span class="tip">
+         <a  title="Details" href='@Url.Action("Details", "Reservation", new { ReservationID = item.ReservationID })'>
+          <img alt=""  src='@Url.Content("/ziceadmin/images/icon/detail.png")' />
+         </a>   
+        </span>         
+   </td>
+    <td class="center">
+    <a class="uibutton medium" href="@Url.Action("Valider", "ReservationValide", new { ReservationID = item.ReservationID })" > Validate</a>
+    </td>
+}
+else if (Excursion.Portail.Utilities.SessionData.CurrentUser.TypeUser == "Client Indirect" || Excursion.Portail.Utilities.SessionData.CurrentUser.TypeUser == "Client")
+{
+    <td class="center">
+    <a class="uibutton confirm" href="@Url.Action("Update", "Reservation", new { ReservationID = item.ReservationID })" > update </a>
+    </td>
+    
+    <td class="center">
+    <a class="uibutton special" href="@Url.Action("Cancel", "Reservation", new { ReservationID = item.ReservationID })" > Cancel</a>
+    </td>
+}
+
+
+</tr>
+     }
+
+
+</tbody>
+    
+</table>
+     
+    }
+}
+</div>
+</form>
+*@
+      @* JQGrid *@
+      
+
+<p>
+<table>
+<tr>
+<td>
+<label style="font-size:x-small">@Global.NumeroTicket:</label>
+       <input type="text" id="search-User" />
+       
+</td>
+<td>
+<label style="font-size:x-small"> @Global.Hotel:</label>
+       <input type="text" id="search2" />
+       
+</td> 
+</tr>
+<tr>
+<td>
+<label style="font-size:x-small"> @Global.PointDepart:</label>
+       <input type="text" id="search3" />
+       
+</td>
+<td>
+<label style="font-size:x-small"> @Global.Chambre:</label>
+       <input type="text" id="search4" />
+
+</td>
+</tr>
+</table>
+       
+       <button class="uibutton medium" id="text-email">@Global.Rechercher</button>
+</p>
+<p>
+        <label style="font-size:x-small">@Global.ChoixPeriode: </label>
+        <input type="text" class="dtp" id="startDate" />
+        <input type="text" class="dtp" id="endDate" />
+</p>
+    
+    <table id="list" class="scroll" cellpadding="0" cellspacing="0"></table> 
+    <div id="pager" class="scroll" style="text-align:center;"></div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var updateDialog = {
+            url: '@Url.Action("Update", "Reservation")'
+                , closeAfterAdd: true
+                , closeAfterEdit: true
+                , afterShowForm: function (formId) {
+                    $("#PhoneNumber").mask("(999) 999-9999");
+                    $("#DateReserv").datepicker();
+                    $("#DateAnnulation").datepicker();
+                    $("#DateModification").datepicker();
+                    $("#DatePayement").datepicker();
+                }
+                , afterclickPgButtons: function (whichbutton, formid, rowid) {
+                    $("#PhoneNumber").mask("(999) 999-9999");
+                }
+                , modal: true
+
+                , onclickSubmit: function (params) {
+                    var ajaxData = {};
+
+                    var list = $("#list");
+                    var selectedRow = list.getGridParam("selrow");
+                    rowData = list.getRowData(selectedRow);
+                    ajaxData = { ReservationID: rowData.ReservationID };
+
+                    return ajaxData;
+
+                }
+
+                , width: "550"
+        };
+
+        var gridimgpath = '/ScriptsJqGrid/Scripts/jqgrid/themes/redmond/images';
+        var gridDataUrl = '/Reservation/JsonSalesCollection';
+
+
+        // use date.js to calculate the values for this month
+        var startDate = Date.parse('today').moveToFirstDayOfMonth();
+        var endDate = Date.parse('today');
+        //
+
+        $.jgrid.nav.addtext = "@Global.addtext";
+        $.jgrid.nav.edittext = "@Global.edittext";
+        $.jgrid.nav.deltext = "@Global.deltext";
+        $.jgrid.edit.addCaption = "@Global.addCaption";
+        $.jgrid.edit.editCaption = "@Global.editCaption";
+        $.jgrid.del.caption = "@Global.delcaption";
+        $.jgrid.del.msg = "@Global.delmsg";
+        $("#list").jqGrid({
+            url: gridDataUrl + '?startDate=' + startDate.toJSONString() + '&endDate=' + endDate.toJSONString(),
+            datatype: "json",
+            mtype: 'GET',
+            colNames: ['ReservationID', '@Global.PointDepart', '@Global.DateReservation', '@Global.NumeroTicket', '@Global.Excursion', '@Global.Hotel', '@Global.Chambre', '@Global.Langue', '@Global.Observation', '@Global.NombreAdultes', '@Global.NombreEnfants', '@Global.NombreBebes', '@Global.Paye', '@Global.DatePayement'],
+            colModel: [
+              { name: 'ReservationID', index: 'ReservationID', width: 100, align: 'left', hidden: true, editable: false, edittype: 'text', editrules: { required: true }, formoptions: { elmsuffix: ' *'} },
+              { name: 'PointDepart', index: 'PointDepart', width: 100, align: 'left', editable: true, edittype: 'text', editrules: { required: true }, formoptions: { elmsuffix: ' *'} },
+              { name: 'DateReservation', index: 'DateReservation', width: 100, align: 'left', hidden: true, formatter: 'date', datefmt: 'm/d/Y', editable: false, edittype: 'text', editrules: { required: true, date: true }, formoptions: { elmsuffix: ' *'} },
+              { name: 'NumTicket', index: 'NumTicket', width: 100, align: 'right', editable: true, edittype: 'text', editrules: { required: true }, formoptions: { elmsuffix: ' *'} },
+              { name: 'SortieID', index: 'SortieID', editable: true, edittype: 'select', width: 100,
+                  editoptions: { dataUrl: '@Url.Action("GetExcursionsList","Reservation")',
+                      buildSelect: function (data) {
+                          var response = jQuery.parseJSON(data.responseText);
+                          var s = '<select>';
+                          if (response && response.length) {
+                              for (var i = 0, l = response.length; i < l; i++) {
+                                  var ri = response[i];
+                                  s += '<option value="' + ri + '">' + ri + '</option>';
+                              }
+                          }
+                          return s + "</select>";
+                      }
+                  }
+              },
+              { name: 'HotelID', index: 'HotelID', editable: true, edittype: 'select', width: 100,
+                  editoptions: { dataUrl: '@Url.Action("GetHotelsList","Reservation")',
+                      buildSelect: function (data) {
+                          var response = jQuery.parseJSON(data.responseText);
+                          var s = '<select>';
+                          if (response && response.length) {
+                              for (var i = 0, l = response.length; i < l; i++) {
+                                  var ri = response[i];
+                                  s += '<option value="' + ri + '">' + ri + '</option>';
+                              }
+                          }
+                          return s + "</select>";
+                      }
+                  }
+              },
+              { name: 'NumChamb', index: 'NumChamb', width: 100, align: 'right', editable: true, edittype: 'text', editrules: { required: true }, formoptions: { elmsuffix: ' *'} },
+              { name: 'LangueID', index: 'LangueID', editable: true, edittype: 'select', width: 100,
+                  editoptions: { dataUrl: '@Url.Action("GetLanguesList","Reservation")',
+                      buildSelect: function (data) {
+                          var response = jQuery.parseJSON(data.responseText);
+                          var s = '<select>';
+                          if (response && response.length) {
+                              for (var i = 0, l = response.length; i < l; i++) {
+                                  var ri = response[i];
+                                  s += '<option value="' + ri + '">' + ri + '</option>';
+                              }
+                          }
+                          return s + "</select>";
+                      }
+                  }
+              },
+               { name: 'Observation', index: 'Observation', width: 40, align: 'left', editable: true, edittype: 'text', editrules: { required: true }, formoptions: { elmsuffix: ' *'} },
+               { name: 'NbreAdultes', index: 'NbreAdultes', width: 55, align: 'left', editable: true, edittype: 'text', editrules: { required: true }, formoptions: { elmsuffix: ' *'} },
+               { name: 'NbreEnfants', index: 'NbreEnfants', width: 55, align: 'left', editable: true, edittype: 'text', editrules: { required: true }, formoptions: { elmsuffix: ' *'} },
+               { name: 'NbreBebes', index: 'NbreBebes', width: 55, align: 'left', editable: true, edittype: 'text', editrules: { required: true }, formoptions: { elmsuffix: ' *'} },
+               { name: 'IsPaye', index: 'IsPaye', width: 40, align: 'left', editable: true, edittype: 'checkbox', editoptions: { value: "True:False" }, editrules: { required: true} },
+               { name: 'DatePayement', index: 'DatePayement', width: 40, align: 'left', formatter: 'date', datefmt: 'm/d/Y', editable: true, edittype: 'text', editrules: { required: true, date: true }, formoptions: { elmsuffix: ' *'} }
+
+               ],
+            pager: $('#pager'),
+            rowNum: 20,
+            rowList: [10, 20, 30],
+            sortname: 'ReservationID',
+            imgpath: gridimgpath,
+            //autowidth: true,
+            //autoheight: true,
+            height: '250',
+            width: '1050',
+            viewrecords: true,
+            sortorder: "desc",
+            caption: "@Global.Reservations",
+            ondblClickRow: function (rowid, iRow, iCol, e) {
+                $("#list").editGridRow(rowid, prmGridDialog);
+            }
+        }).navGrid('#listPager',
+                {
+                    edit: true, add: true, del: true, search: false, refresh: true
+                },
+                updateDialog,
+                updateDialog,
+                updateDialog
+            );
+        //        .jqGrid('filterToolbar', { stringResult: true, searchOnEnter: true })
+
+        //        .jqGrid("navGrid", "#pager", { edit: true, add: true, del: true, search: false, refresh: true },
+        //                updateDialog,
+        //                updateDialog,
+        //                updateDialog
+        //                );
+
+
+
+
+        $(function () {
+            $(".dtp").datepicker(
+            {
+                closeText: 'Fermer', closeStatus: 'Fermer sans modifier',
+                prevText: '&lt;Préc', prevStatus: 'Voir le mois précédent',
+                nextText: 'Suiv&gt;', nextStatus: 'Voir le mois suivant',
+                currentText: 'Courant', currentStatus: 'Voir le mois courant',
+                monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
+                'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+                monthNamesShort: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun',
+                'Jul', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc'],
+                monthStatus: 'Voir un autre mois', yearStatus: 'Voir un autre année',
+                weekHeader: 'Sm', weekStatus: '',
+                dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+                dayNamesShort: ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'],
+                dayNamesMin: ['Di', 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa'],
+                dayStatus: 'Utiliser DD comme premier jour de la semaine', dateStatus: 'Choisir le DD, MM d',
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'D M d, yy',
+                onSelect: function () {
+                    // Set the vars whenever the date range changes and then filter the results
+                    startDate = new Date($('#startDate').val());
+                    endDate = new Date($('#endDate').val());
+                    setGridUrl();
+                }
+            });
+            //Set the date range textbox values
+            $('#startDate').val(startDate.toDateString());
+            $('#endDate').val(endDate.toDateString());
+            // Set the grid json url to get the data to display
+            setGridUrl();
+        });
+
+        //          $(function () {
+        //            // Configure the date range picker
+        //            $('.daterangepicker').daterangepicker({
+        //                dateFormat: 'D M d, yy',
+        //                posX: 100,
+        //                posY: '16.8em',
+        //                onChange: function () {
+        //                    // Set the vars whenever the date range changes and then filter the results
+        //                    startDate = new Date($('#startDate').val());
+        //                    endDate = new Date($('#endDate').val());
+        //                    setGridUrl();
+        //                }
+        //            });
+
+        //            // Set the date range textbox values
+        //            $('#startDate').val(startDate.toDateString());
+        //            $('#endDate').val(endDate.toDateString());
+
+        //            // Set the grid json url to get the data to display
+        //            setGridUrl();
+        //        });
+
+        function setGridUrl() {
+            // Get the start and end dates entered
+            var newGridDataUrl = gridDataUrl + '?startDate=' + startDate.toJSONString() + '&endDate=' + endDate.toJSONString();
+
+            // Set the parameters in the grid data source
+            jQuery('#list').jqGrid('setGridParam', { url: newGridDataUrl }).trigger("reloadGrid");
+        }
+
+
+
+        $(function () {
+            $('#text-email').click(function () {
+
+                startDate = new Date($('#startDate').val());
+                endDate = new Date($('#endDate').val());
+                //setGridUrl2();
+                var areavalue = $('#search-User').val();
+                // Get the start and end dates entered
+                var newGridDataUrl = gridDataUrl + '?startDate=' + startDate.toJSONString() + '&endDate=' + endDate.toJSONString() + '&typeclient=' + areavalue.toString();
+
+                // Set the parameters in the grid data source
+                jQuery('#list').jqGrid('setGridParam', { url: newGridDataUrl }).trigger("reloadGrid");
+
+            });
+        });
+
+        function setGridUrl2() {
+            var areavalue = $('#search-User').val();
+            // Get the start and end dates entered
+            var newGridDataUrl = gridDataUrl + '?startDate=' + startDate.toJSONString() + '&endDate=' + endDate.toJSONString() + '&typeclient=' + areavalue.toString();
+
+            // Set the parameters in the grid data source
+            jQuery('#list').jqGrid('setGridParam', { url: newGridDataUrl }).trigger("reloadGrid");
+        }
+
+    });
+    </script>
+
+
+      @* JQGrid *@
+                    
+</div>
+</div>
+

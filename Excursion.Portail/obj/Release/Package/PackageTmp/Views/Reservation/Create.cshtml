@@ -1,0 +1,134 @@
+﻿@model Excursion.Data.Reservation
+@{
+    
+ }
+
+
+
+ <script type="text/javascript">
+ 
+ $(document).ready(function(){
+
+     $("#SubModified").hide();
+     $("#SubCanceled").hide();
+     $("#Etat").change(function () {
+         if ($(this).val() === "Modified") {
+             $("#SubModified").show();
+         } else {
+             $("#SubModified").hide();
+         }
+
+         if ($(this).val() === "Canceled") {
+             $("#SubCanceled").show();
+         } else {
+             $("#SubCanceled").hide();
+         }
+
+
+     });
+  });
+
+ </script>
+
+
+<div class="formEl_b">	
+                              
+@using (Html.BeginForm("Create", "Reservation", FormMethod.Post))
+{
+ <fieldset >
+ <legend>Create Reservation<span class="small s_color">(Reservation)</span></legend>
+              <h3 style="color:Red">@ViewBag.AjoutSuccess</h3>                                                           
+                 <div class="section">
+                                
+        <label> Informations  <small> </small></label>
+
+         
+        @Html.Hidden("SortieID", 
+                      (SelectList)(ViewData["Sortie"]))
+                                             
+        <div>                               
+        @Html.TextBoxFor(modelItem => modelItem.NumChamb) @Html.LabelFor(modelItem => modelItem.NumChamb)
+        </div>
+        <div>       
+              
+            @Html.DropDownList("HotelName", 
+                      (SelectList)(ViewData["Hotel"]), "-- Select --")
+                      @Html.LabelFor(modelItem => modelItem.Hotel) 
+        </div>  
+        <div>
+            @Html.TextAreaFor(modelItem => modelItem.PointDepart) @Html.LabelFor(modelItem => modelItem.PointDepart)
+        </div> 
+        <div> 
+        
+             @Html.DropDownList("LanguageName",
+                  (SelectList)(ViewData["Lang"]), "-- Select --")
+           @Html.LabelFor(modelItem => modelItem.Langue)
+        </div>  
+        <div>
+            @Html.TextAreaFor(modelItem => modelItem.Observation)  @Html.LabelFor(modelItem => modelItem.Observation)
+        </div>
+          
+        @*<div class="item">    
+             @Html.DropDownListFor( modelItem => modelItem.Etat, 
+                  (SelectList)(ViewData["Etatres"]), "-- Select --", new { id = "Etat" })
+                  @Html.LabelFor(modelItem => modelItem.Etat)
+        </div> *@ 
+        
+        <div>
+        <table>
+        <tr>
+        <td>
+        @Html.LabelFor(modelItem => modelItem.Etat)
+        @Html.DropDownList("Etat",
+              (SelectList)(ViewData["Etatres"]), "-- Select --")
+                  
+        </td>
+        <td id ="SubCanceled" >
+         @Html.LabelFor(modelItem => modelItem.DateAnnulation) @Html.TextBoxFor(modelItem => modelItem.DateAnnulation)
+        </td>
+        <td id ="SubModified">
+        @Html.LabelFor(modelItem => modelItem.DateModification) @Html.TextBoxFor(modelItem => modelItem.DateModification) 
+        </td>
+        </tr>
+        </table>        
+       </div>   
+       <div> 
+            @Html.TextBoxFor(modelItem => modelItem.NumTicket)  @Html.LabelFor(modelItem => modelItem.NumTicket)
+       </div> 
+       <div> 
+            
+            @Html.TextBoxFor(modelItem => modelItem.Reduction)@Html.LabelFor(modelItem => modelItem.Reduction)
+       </div> 
+       <div> 
+            
+            @Html.TextBoxFor(modelItem => modelItem.NbreAdultes)@Html.LabelFor(modelItem => modelItem.NbreAdultes)
+       </div> 
+       <div> 
+           
+            @Html.TextBoxFor(modelItem => modelItem.NbreEnfants) @Html.LabelFor(modelItem => modelItem.NbreEnfants)
+       </div> 
+       <div> 
+            
+            @Html.TextBoxFor(modelItem => modelItem.NbreBebes)@Html.LabelFor(modelItem => modelItem.NbreBebes)
+       </div> 
+       
+       <div> 
+            
+            @Html.TextBoxFor(modelItem => modelItem.Paye)@Html.LabelFor(modelItem => modelItem.Paye)
+       </div> 
+       <div>
+            @Html.TextBoxFor(modelItem => modelItem.DatePayement)@Html.LabelFor(modelItem => modelItem.DatePayement)
+       </div> 
+   </div>
+                                      
+<div class="section last">
+<div>
+<input class="uibutton submit_form" type="submit" value="Create" />
+ @* <a class="uibutton submit_form" >submitForm</a><a class="uibutton special"   onClick="ResetForm()" title="Reset  Form"   >Clear Form</a>*@ 
+<a class="uibutton special"  href="@Url.Action("Index", "Sortie")" >Cancel</a>
+</div>
+</div>
+</fieldset>
+}
+</div>
+

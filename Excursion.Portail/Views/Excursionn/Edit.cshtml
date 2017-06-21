@@ -1,0 +1,155 @@
+﻿@model Excursion.Data.Excursionn
+@{
+    ViewBag.Title = "Edit";
+    Layout = "_LayoutOrig.cshtml"; 
+}
+
+<h2>Edit</h2>
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Excursion</legend>
+
+        @Html.HiddenFor(model => model.id)
+        @Html.HiddenFor(model => model.organizerId)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.title)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.title)
+            @Html.ValidationMessageFor(model => model.title)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.description)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.description)
+            @Html.ValidationMessageFor(model => model.description)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.theme)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.theme)
+            @Html.ValidationMessageFor(model => model.theme)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.state)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.state)
+            @Html.ValidationMessageFor(model => model.state)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.adults)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.adults)
+            @Html.ValidationMessageFor(model => model.adults)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.kinder)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.kinder)
+            @Html.ValidationMessageFor(model => model.kinder)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.babies)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.babies)
+            @Html.ValidationMessageFor(model => model.babies)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.priceAdult)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.priceAdult)
+            @Html.ValidationMessageFor(model => model.priceAdult)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.priceKind)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.priceKind)
+            @Html.ValidationMessageFor(model => model.priceKind)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.priceBaby)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.priceBaby)
+            @Html.ValidationMessageFor(model => model.priceBaby)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.departureDay)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.departureDay)
+            @Html.ValidationMessageFor(model => model.departureDay)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.departureTime)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.departureTime)
+            @Html.ValidationMessageFor(model => model.departureTime)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.departurePoint)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.departurePoint)
+            @Html.ValidationMessageFor(model => model.departurePoint)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.departureCountry)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.departureCountry)
+            @Html.ValidationMessageFor(model => model.departureCountry)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.destination)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.destination)
+            @Html.ValidationMessageFor(model => model.destination)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.length)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.length)
+            @Html.ValidationMessageFor(model => model.length)
+        </div>
+
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to Home", "Index","Home")
+</div>

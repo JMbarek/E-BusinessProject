@@ -1,0 +1,37 @@
+﻿@model Excursion.Portail.Models.ReserverModel
+@{
+    ViewBag.Title = "Reserver";
+    Layout = "_LayoutOrig.cshtml";
+    
+    var sortieID = ViewData["SortieID"];    
+}
+<section class="featured">
+    <div class="content-wrapper">
+        @using (Html.BeginForm("Reserver", "Home", FormMethod.Post))
+        {    
+            <fieldset>
+                <legend>Ajout Sortie:</legend>
+                <ol>
+                    <li>
+                        <input style="visibility:hidden" name="SortieID" id="SortieID" type="text" value="@ViewData["SortieID"]" />
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.NbrAdultes)
+                        @Html.TextBoxFor(m => m.NbrAdultes)
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.NbrEnfants)
+                        @Html.TextBoxFor(m => m.NbrEnfants)
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.NbrBebes)
+                        @Html.TextBoxFor(m => m.NbrBebes)
+                    </li>
+                    <li></li>
+                    <li></li>
+                </ol>
+                <input type="submit" value="Add To Cart" />
+            </fieldset>
+        }
+    </div>
+</section>

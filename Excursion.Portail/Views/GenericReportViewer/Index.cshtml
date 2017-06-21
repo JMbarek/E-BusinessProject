@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "Reporting Index";
+    Layout = "_LayoutOrig.cshtml";  
+}
+<section class="content-wrapper">
+    <h5>
+        Day reservation :</h5>
+    <section class="featured">
+        <div class="content-wrapper">
+            @Html.Partial("DayReservation")
+        </div>
+    </section>
+    <h5>
+        Guide Periode reservation :</h5>
+    <section class="featured">
+        <div class="content-wrapper">
+            @Html.Partial("GuidePeriodeReservation")
+        </div>
+    </section>
+    <h5>
+        Tour Op Periode reservation :</h5>
+    <section class="featured">
+        <div class="content-wrapper">
+            @Html.Partial("TourOpPeriodeReservation")
+        </div>
+    </section>
+</section>

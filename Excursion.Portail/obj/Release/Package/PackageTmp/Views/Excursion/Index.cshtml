@@ -1,0 +1,90 @@
+﻿@model IEnumerable<Excursion.Data.Excursion>
+@{
+    ViewBag.Title = "Index";
+}
+<div class="onecolumn">
+    <div class="header">
+        <span>Outings List </span>
+    </div>
+    <!-- End header -->
+    <div class=" clear">
+    </div>
+    <div class="content">
+        <form>
+        <div class="tableName">
+            @using (Html.BeginForm("Index", "Client"))
+            {
+  
+                <h4 style="color: Red">@ViewBag.Message</h4>
+
+                if (Model != null)
+                {
+                <table class="display data_table2">
+                    <thead>
+                        <tr>
+                            <th>
+                                Code
+                            </th>
+                            <th>
+                                NOM
+                            </th>
+                            <th>
+                                Date Debut
+                            </th>
+                            <th>
+                                Date Fin
+                            </th>
+                            <th>
+                                Prix
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr class="odd gradeA">
+                                <td class="center">
+                                    @Html.DisplayFor(modelItem => item.CodeExcursion)
+                                </td>
+                                <td class="center">
+                                    @Html.DisplayFor(modelItem => item.Nom_fr)
+                                </td>
+                                <td class="center">
+                                    @Html.DisplayFor(modelItem => item.Periode.DateDebut)
+                                </td>
+                                <td class="center">
+                                    @Html.DisplayFor(modelItem => item.Periode.DateFin)
+                                </td>
+                                <td class="center">
+                                    @Html.DisplayFor(modelItem => item.Prix.PrixAdulte)
+                                </td>
+                                @if (Excursion.Portail.Utilities.SessionData.CurrentUser.TypeUser == "Responsable")
+                                {
+                                    <td class="center">
+                                        <span class="tip"><a  title="Add Output" href='@Url.Action("AjouterSortie", "Sortie", new { ExcursionID = item.ExcursionID })'>
+                                            <img alt=""  src='@Url.Content("/ziceadmin/images/icon/icon_add.png")' />
+                                        </a></span><span class="tip"><a  title="update" href='@Url.Action("ModifierExcursion", "Excursion", new { ExcursionID = item.ExcursionID })'>
+                                            <img alt=""  src='@Url.Content("/ziceadmin/images/icon/icon_edit.png")' />
+                                        </a></span><span class="tip"><a  title="Delete" href='@Url.Action("SupprimerExcursion", "Excursion", new { ExcursionID = item.ExcursionID })'>
+                                            <img alt=""  src='@Url.Content("/ziceadmin/images/icon/icon_delete.png")' />
+                                        </a></span>
+                                    </td>
+                                }
+                                else if (Excursion.Portail.Utilities.SessionData.CurrentUser.TypeUser == "Client Indirect")
+                                { 
+                                    <td class="center">
+                                        <a class="uibutton medium" href="@Url.Action("Index", "Sortie", new { ExcursionID = item.ExcursionID })" >
+                                            See Outputs</a>
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+     
+                }
+            }
+        </div>
+        </form>
+    </div>
+</div>

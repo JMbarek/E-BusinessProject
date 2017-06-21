@@ -1,0 +1,50 @@
+C:\Users\user\Documents\Visual Studio 2010\Projects\Excursion\Excursion.Business\bin\Excursion.Business.dll
+C:\Users\user\Documents\Visual Studio 2010\Projects\Excursion\Excursion.Business\bin\Excursion.Business.pdb
+C:\Users\user\Documents\Visual Studio 2010\Projects\Excursion\Excursion.Business\bin\EntityFramework.dll
+C:\Users\user\Documents\Visual Studio 2010\Projects\Excursion\Excursion.Business\bin\Excursion.Data.dll
+C:\Users\user\Documents\Visual Studio 2010\Projects\Excursion\Excursion.Business\bin\Excursion.Data.pdb
+C:\Users\user\Documents\Visual Studio 2010\Projects\Excursion\Excursion.Business\bin\EntityFramework.xml
+C:\Users\user\Documents\Visual Studio 2010\Projects\Excursion\Excursion.Business\obj\Release\Excursion.Business.csprojResolveAssemblyReference.cache
+C:\Users\user\Documents\Visual Studio 2010\Projects\Excursion\Excursion.Business\obj\Release\Excursion.Business.dll
+C:\Users\user\Documents\Visual Studio 2010\Projects\Excursion\Excursion.Business\obj\Release\Excursion.Business.pdb
+H:\ExcursionPRojectWebMobile\Excursion\Excursion.Business\bin\Excursion.Business.dll
+H:\ExcursionPRojectWebMobile\Excursion\Excursion.Business\bin\Excursion.Business.pdb
+H:\ExcursionPRojectWebMobile\Excursion\Excursion.Business\bin\EntityFramework.dll
+H:\ExcursionPRojectWebMobile\Excursion\Excursion.Business\bin\Excursion.Data.dll
+H:\ExcursionPRojectWebMobile\Excursion\Excursion.Business\bin\Excursion.Data.pdb
+H:\ExcursionPRojectWebMobile\Excursion\Excursion.Business\obj\Release\Excursion.Business.csprojResolveAssemblyReference.cache
+H:\ExcursionPRojectWebMobile\Excursion\Excursion.Business\obj\Release\Excursion.Business.dll
+H:\ExcursionPRojectWebMobile\Excursion\Excursion.Business\obj\Release\Excursion.Business.pdb
+J:\ExcursionPRojectWebMobile\Excursion\Excursion.Business\bin\Excursion.Business.dll
+J:\ExcursionPRojectWebMobile\Excursion\Excursion.Business\bin\Excursion.Business.pdb
+J:\ExcursionPRojectWebMobile\Excursion\Excursion.Business\bin\EntityFramework.dll
+J:\ExcursionPRojectWebMobile\Excursion\Excursion.Business\bin\Excursion.Data.dll
+J:\ExcursionPRojectWebMobile\Excursion\Excursion.Business\bin\Excursion.Data.pdb
+J:\ExcursionPRojectWebMobile\Excursion\Excursion.Business\obj\Release\Excursion.Business.csprojResolveAssemblyReference.cache
+J:\ExcursionPRojectWebMobile\Excursion\Excursion.Business\obj\Release\Excursion.Business.dll
+J:\ExcursionPRojectWebMobile\Excursion\Excursion.Business\obj\Release\Excursion.Business.pdb
+H:\VenteExcursionFinale\VenteExcursion2\ExcursionPRojectWebMobile\Excursion\Excursion.Business\bin\Excursion.Business.dll
+H:\VenteExcursionFinale\VenteExcursion2\ExcursionPRojectWebMobile\Excursion\Excursion.Business\bin\Excursion.Business.pdb
+H:\VenteExcursionFinale\VenteExcursion2\ExcursionPRojectWebMobile\Excursion\Excursion.Business\bin\EntityFramework.dll
+H:\VenteExcursionFinale\VenteExcursion2\ExcursionPRojectWebMobile\Excursion\Excursion.Business\bin\Excursion.Data.dll
+H:\VenteExcursionFinale\VenteExcursion2\ExcursionPRojectWebMobile\Excursion\Excursion.Business\bin\Excursion.Data.pdb
+H:\VenteExcursionFinale\VenteExcursion2\ExcursionPRojectWebMobile\Excursion\Excursion.Business\obj\Release\Excursion.Business.csprojResolveAssemblyReference.cache
+H:\VenteExcursionFinale\VenteExcursion2\ExcursionPRojectWebMobile\Excursion\Excursion.Business\obj\Release\Excursion.Business.dll
+H:\VenteExcursionFinale\VenteExcursion2\ExcursionPRojectWebMobile\Excursion\Excursion.Business\obj\Release\Excursion.Business.pdb
+J:\VenteExcursionFinale - Copie\VenteExcursion2\ExcursionPRojectWebMobile\Excursion\Excursion.Business\bin\Excursion.Business.dll
+J:\VenteExcursionFinale - Copie\VenteExcursion2\ExcursionPRojectWebMobile\Excursion\Excursion.Business\bin\Excursion.Business.pdb
+J:\VenteExcursionFinale - Copie\VenteExcursion2\ExcursionPRojectWebMobile\Excursion\Excursion.Business\bin\EntityFramework.dll
+J:\VenteExcursionFinale - Copie\VenteExcursion2\ExcursionPRojectWebMobile\Excursion\Excursion.Business\bin\Excursion.Data.dll
+J:\VenteExcursionFinale - Copie\VenteExcursion2\ExcursionPRojectWebMobile\Excursion\Excursion.Business\bin\Excursion.Data.pdb
+J:\VenteExcursionFinale - Copie\VenteExcursion2\ExcursionPRojectWebMobile\Excursion\Excursion.Business\obj\Release\Excursion.Business.csprojResolveAssemblyReference.cache
+J:\VenteExcursionFinale - Copie\VenteExcursion2\ExcursionPRojectWebMobile\Excursion\Excursion.Business\obj\Release\Excursion.Business.dll
+J:\VenteExcursionFinale - Copie\VenteExcursion2\ExcursionPRojectWebMobile\Excursion\Excursion.Business\obj\Release\Excursion.Business.pdb
+D:\VenteExcursionFinale - Copie\VenteExcursion2\ExcursionPRojectWebMobile\Excursion\Excursion.Business\bin\Excursion.Business.dll.config
+D:\VenteExcursionFinale - Copie\VenteExcursion2\ExcursionPRojectWebMobile\Excursion\Excursion.Business\bin\Excursion.Business.dll
+D:\VenteExcursionFinale - Copie\VenteExcursion2\ExcursionPRojectWebMobile\Excursion\Excursion.Business\bin\Excursion.Business.pdb
+D:\VenteExcursionFinale - Copie\VenteExcursion2\ExcursionPRojectWebMobile\Excursion\Excursion.Business\bin\EntityFramework.dll
+D:\VenteExcursionFinale - Copie\VenteExcursion2\ExcursionPRojectWebMobile\Excursion\Excursion.Business\bin\Excursion.Data.dll
+D:\VenteExcursionFinale - Copie\VenteExcursion2\ExcursionPRojectWebMobile\Excursion\Excursion.Business\bin\Excursion.Data.pdb
+D:\VenteExcursionFinale - Copie\VenteExcursion2\ExcursionPRojectWebMobile\Excursion\Excursion.Business\obj\Release\Excursion.Business.csprojResolveAssemblyReference.cache
+D:\VenteExcursionFinale - Copie\VenteExcursion2\ExcursionPRojectWebMobile\Excursion\Excursion.Business\obj\Release\Excursion.Business.dll
+D:\VenteExcursionFinale - Copie\VenteExcursion2\ExcursionPRojectWebMobile\Excursion\Excursion.Business\obj\Release\Excursion.Business.pdb

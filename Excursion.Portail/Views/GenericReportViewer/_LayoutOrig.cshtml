@@ -1,0 +1,75 @@
+﻿@using MvcGlobalisationSupport;
+@using Excursion.Portail.Resources
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title - - @Html.Raw(Global.Title)</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width" />
+     
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")
+     
+<script src="@Url.Content("~/Scripts/jquery-1.7.1.js")" type="text/javascript"></script>
+<link href="@Url.Content("~/Content/themes/base/minified/jquery-ui.min.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/jquery-ui-1.8.20.min.js")" type="text/javascript"></script>
+
+@*<!--IgniteUI resources loader-->
+<script src="@Url.Content("~/Scripts/js/infragistics.loader.js")" type="text/javascript"></script>
+<!--Dialog controls scripts-->
+<script src="@Url.Content("~/Scripts/dialog.js")" type="text/javascript"></script> *@
+
+    </head>
+     
+    <body>
+        <header>
+            <div class="content-wrapper">
+            @*<div>*@
+                <div class="float-left">
+                    <img alt="" src="~/ziceadmin/images/logo/Logo_TTS.png" />
+                </div>
+                <div class="float-right">
+                  
+                  <nav>
+                        <ul id="languages">
+                            <li>@Html.GlobalisedRouteLink(Global.LangEnglish, "en", ViewContext.RouteData)</li>
+                            <li>@Html.GlobalisedRouteLink(Global.LangGerman, "de", ViewContext.RouteData)</li>
+                            <li>@Html.GlobalisedRouteLink(Global.LangFrench, "fr", ViewContext.RouteData)</li>
+                            <li>@Html.GlobalisedRouteLink(Global.LangItalian, "it", ViewContext.RouteData)</li>
+                           @* <li>@Html.GlobalisedRouteLink(Global.LangArab, "ar", ViewContext.RouteData)</li>*@
+                        </ul>
+                    </nav>
+
+                    <section id="login">
+                        @Html.Partial("_LoginPartial")
+                    </section>
+                    @*<nav>
+                        <ul id="menu">
+                            <li>@Html.ActionLink(Global.Home, "Index", "Home")</li>
+                            <li>@Html.ActionLink(Global.About, "About", "Home")</li>
+                            <li>@Html.ActionLink(Global.Contact, "Contact", "Home")</li>
+                        </ul>
+                    </nav>*@
+                </div>
+            </div>
+        </header>
+        @Html.Partial("~/Views/Shared/_NavigationMenu.cshtml")
+        <div id="body">
+            @RenderSection("featured", required: false)
+            <section class="main-content clear-fix">
+                @RenderBody() 
+            </section>
+        </div>
+        <footer>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p>&copy; @DateTime.Now.Year - @Html.Raw(Global.Title)</p>
+                </div>
+            </div>
+        </footer>
+        @*@Scripts.Render("~/bundles/jquery")
+        @RenderSection("scripts", required: false)*@
+    </body>
+</html>
